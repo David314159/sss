@@ -111,7 +111,7 @@ class TestPlayer(SSSTest):
             y_expected_change=NumChange.STAY
         )
         self.assertMovement(
-            Direction.NORTHEAST,
-            x_expected_change=NumChange.INCREASE,
+            Direction.NORTHWEST,
+            x_expected_change=NumChange.DECREASE,
             y_expected_change=NumChange.INCREASE
         )
