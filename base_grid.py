@@ -1,11 +1,11 @@
+from typing import Any
+
+
 class BaseGrid:
-    def __init__(self, rows: int, cols: int):
+    def __init__(self, rows: int, cols: int, default_value: Any):
         self.rows = rows
         self.cols = cols
-
-        self.vals = []
-        for i in range(0, cols):
-            self.vals.append([-1] * rows)
+        self.vals = [([default_value] * cols) * rows]
 
     def __str__(self):
         return str(self.vals)
