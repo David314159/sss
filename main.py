@@ -1,7 +1,5 @@
-from grid import Grid
+from region import Region
 
-grid = Grid(5, 4)
-grid.set_val(1, 2, 11)
-print(grid.get_val(1, 2))
-
-# test comment
+region = Region(8, 9)
+region.set_val(1, 2, 11)
+print(region.get_val(1, 2))
