@@ -39,26 +39,26 @@ class TestPlayer(SSSTest):
         # I am aware this copy-pasted code is a bit of un momento de bruh but idk how to fix it
         match x_expected_change:
             case NumChange.STAY:
-                x_expected_amount_changed = 0
-                expected_outcome_of_movement_for_x = "not cause x_square to change"
+                x_expected_amount_changed: int = 0
+                expected_outcome_of_movement_for_x: str = "not cause x_square to change"
             case NumChange.DECREASE:
-                x_expected_amount_changed = -num_squares_to_move
-                expected_outcome_of_movement_for_x = "lower x_square by N, where N is the number of squares moved"
+                x_expected_amount_changed: int = -num_squares_to_move
+                expected_outcome_of_movement_for_x: str = "lower x_square by N, where N is the number of squares moved"
             case NumChange.INCREASE:
-                x_expected_amount_changed = num_squares_to_move
-                expected_outcome_of_movement_for_x = "increase x_square by N, where N is the number of squares moved"
+                x_expected_amount_changed: int = num_squares_to_move
+                expected_outcome_of_movement_for_x: str = "increase x_square by N, where N is the number of squares moved"
             case _:
                 raise TypeError("x_expected_change must be a NumChange enum")
         match y_expected_change:
             case NumChange.STAY:
-                y_expected_amount_changed = 0
-                expected_outcome_of_movement_for_y = "not cause y_square to change"
+                y_expected_amount_changed: int = 0
+                expected_outcome_of_movement_for_y: str = "not cause y_square to change"
             case NumChange.DECREASE:
-                y_expected_amount_changed = -num_squares_to_move
-                expected_outcome_of_movement_for_y = "lower y_square by N, where N is the number of squares moved"
+                y_expected_amount_changed: int = -num_squares_to_move
+                expected_outcome_of_movement_for_y: str = "lower y_square by N, where N is the number of squares moved"
             case NumChange.INCREASE:
-                y_expected_amount_changed = num_squares_to_move
-                expected_outcome_of_movement_for_y = "increase y_square by N, where N is the number of squares moved"
+                y_expected_amount_changed: int = num_squares_to_move
+                expected_outcome_of_movement_for_y: str = "increase y_square by N, where N is the number of squares moved"
             case _:
                 raise TypeError("y_expected_change must be a NumChange enum")
 
