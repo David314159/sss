@@ -1,5 +1,10 @@
+from directions import Direction
+from player import Player
 from region import Region
 
-region: Region = Region(8, 9)
-region.set_val(1, 2, 11)
-print(region.get_val(1, 2))
+player = Player(3, 4, 7, 8)
+print(player.x_square)
+print(player.y_square)
+player.move_squares(Direction.NORTH, 3)
+print(player.x_square)
+print(player.y_square)
