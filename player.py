@@ -19,3 +19,15 @@ class Player:
                 self.x_square -= num_squares
             case Direction.SOUTH:
                 self.y_square -= num_squares
+            case Direction.NORTHEAST:
+                self.move_squares(Direction.NORTH, num_squares)
+                self.move_squares(Direction.EAST, num_squares)
+            case Direction.SOUTHEAST:
+                self.move_squares(Direction.SOUTH, num_squares)
+                self.move_squares(Direction.EAST, num_squares)
+            case Direction.NORTHWEST:
+                self.move_squares(Direction.NORTH, num_squares)
+                self.move_squares(Direction.WEST, num_squares)
+            case Direction.SOUTHWEST:
+                self.move_squares(Direction.SOUTH, num_squares)
+                self.move_squares(Direction.WEST, num_squares)
