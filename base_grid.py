@@ -5,9 +5,9 @@ class BaseGrid:
     def __init__(self, rows: int, cols: int, default_value: Any):
         self.rows = rows
         self.cols = cols
-        self.vals = [([default_value] * cols) * rows]
+        self.vals = [([default_value] * cols)] * rows
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.vals)
 
     def set_val(self, x: int, y: int, val: int) -> None:
