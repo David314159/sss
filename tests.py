@@ -39,35 +39,35 @@ class TestPlayer(SSSTest):
         # I am aware this copy-pasted code is a bit of un momento de bruh but idk how to fix it
         match x_expected_change:
             case NumChange.STAY:
-                x_expected_amount_changed: int = 0
-                expected_outcome_of_movement_for_x: str = "not cause x_square to change"
+                expected_dx: int = 0
+                expected_x_effect: str = "not change x_square"
             case NumChange.DECREASE:
-                x_expected_amount_changed: int = -num_squares_to_move
-                expected_outcome_of_movement_for_x: str = "lower x_square by N, where N is the number of squares moved"
+                expected_dx: int = -num_squares_to_move
+                expected_x_effect: str = "decrease x_square by N, where N is the number of squares moved"
             case NumChange.INCREASE:
-                x_expected_amount_changed: int = num_squares_to_move
-                expected_outcome_of_movement_for_x: str = "increase x_square by N, where N is the number of squares moved"
+                expected_dx: int = num_squares_to_move
+                expected_x_effect: str = "increase x_square by N, where N is the number of squares moved"
             case _:
                 raise TypeError("x_expected_change must be a NumChange enum")
         match y_expected_change:
             case NumChange.STAY:
-                y_expected_amount_changed: int = 0
-                expected_outcome_of_movement_for_y: str = "not cause y_square to change"
+                expected_dy: int = 0
+                expected_y_effect: str = "not change y_square"
             case NumChange.DECREASE:
-                y_expected_amount_changed: int = -num_squares_to_move
-                expected_outcome_of_movement_for_y: str = "lower y_square by N, where N is the number of squares moved"
+                expected_dy: int = -num_squares_to_move
+                expected_y_effect: str = "decrease y_square by N, where N is the number of squares moved"
             case NumChange.INCREASE:
-                y_expected_amount_changed: int = num_squares_to_move
-                expected_outcome_of_movement_for_y: str = "increase y_square by N, where N is the number of squares moved"
+                expected_dy: int = num_squares_to_move
+                expected_y_effect: str = "increase y_square by N, where N is the number of squares moved"
             case _:
                 raise TypeError("y_expected_change must be a NumChange enum")
 
         self.assertChanges(
             change_things=lambda: player.move_squares(direction, num_squares_to_move),
             get_things=lambda: [player.x_square, player.y_square],
-            expected_net_changes=[x_expected_amount_changed, y_expected_amount_changed],
-            messages=[f"Moving {direction.name.lower()} should {expected_outcome_of_movement_for_x}",
-                      f"Moving {direction.name.lower()} should {expected_outcome_of_movement_for_y}"]
+            expected_net_changes=[expected_dx, expected_dy],
+            messages=[f"Moving {direction.name.lower()} should {expected_x_effect}",
+                      f"Moving {direction.name.lower()} should {expected_y_effect}"]
         )
 
     def test_move_squares(self):
