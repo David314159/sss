@@ -1,5 +1,5 @@
 class BaseGrid:
-    def __init__(self, rows, cols):
+    def __init__(self, rows: int, cols: int):
         self.rows = rows
         self.cols = cols
 
@@ -10,8 +10,8 @@ class BaseGrid:
     def __str__(self):
         return str(self.vals)
 
-    def set_val(self, x, y, val):
+    def set_val(self, x: int, y: int, val: int) -> None:
         self.vals[x][y] = val
 
-    def get_val(self, x, y):
+    def get_val(self, x: int, y: int) -> int:
         return self.vals[x][y]
