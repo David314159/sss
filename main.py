@@ -5,7 +5,7 @@ from player import Player
 player = Player(0, 0, 0, 0)
 
 while True:
-    direction = Direction.str_to_direction(
+    direction = Direction.abbreviation_to_enum(
         input("Which direction do you want to move? ")
     )
     player.move_squares(direction, 1)

@@ -11,10 +11,15 @@ class Direction(Enum):
     NORTHWEST = auto()
     SOUTHWEST = auto()
 
+    def __str__(self):
+        match self:
+            case Direction.NORTH:
+                return "north"
+
     @staticmethod
     # quotes around the "Direction" typehint because python is being cringe
     # see https://www.python.org/dev/peps/pep-0484/#forward-references
-    def str_to_direction(string: str) -> 'Direction':
+    def abbreviation_to_enum(string: str) -> 'Direction':
         str_to_direction_dict = {
             'N': Direction.NORTH,
             'NE': Direction.NORTHEAST,
