@@ -10,7 +10,7 @@ class BaseGrid:
     def __str__(self) -> str:
         return str(self.vals)
 
-    def set_val(self, x: int, y: int, val: int) -> None:
+    def set_val(self, x: int, y: int, val: Any) -> None:
         self.vals[x][y] = val
 
     def get_val(self, x: int, y: int) -> int:

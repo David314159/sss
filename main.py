@@ -2,7 +2,7 @@ from directions import Direction
 from player import Player
 
 
-player = Player(0, 0, 0, 0)
+player = Player(0, 0, 0, 0, "Player")
 
 while True:
     direction = Direction.abbreviation_to_enum(
@@ -17,4 +17,3 @@ while True:
     player.move_squares(direction, 1)
 
     print(f"X:{player.x_square} Y:{player.y_square}")
-

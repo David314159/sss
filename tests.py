@@ -33,7 +33,7 @@ class TestPlayer(SSSTest):
     # It will be much easier to understand that way.
     def assertMovement(self, direction: Direction,
                        x_expected_change: NumChange, y_expected_change: NumChange):
-        player = Player(0, 0, 0, 0)
+        player = Player(0, 0, 0, 0, "Test Name")
         num_squares_to_move: int = randint(-10 ** 10, 10 ** 10)
 
         # I am aware this copy-pasted code is a bit of un momento de bruh but idk how to fix it
