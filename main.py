@@ -15,7 +15,7 @@ class OOGAction(Enum):
     QUIT = auto()
 
 
-def get_player_action() -> Action|OOGAction:
+def get_player_action() -> Action | OOGAction:
     action_int = int(input(
         """What do you do?
         1. Move
@@ -56,6 +56,7 @@ def do_player_action(player: Player):
             player.move_squares(direction, 1)
             print(f"X:{player.x_square} Y:{player.y_square}")
 
+
 player = Player(0, 0, 0, 0, "Player")
 
 while True:
@@ -63,8 +64,3 @@ while True:
     if action == OOGAction.QUIT:
         break
     do_player_action(player)
-
-
-
-
-
