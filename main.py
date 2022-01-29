@@ -57,7 +57,7 @@ def do_player_action(player: Player):
             print(f"X:{player.x_square} Y:{player.y_square}")
 
 
-player = Player(0, 0, 0, 0, "Player")
+player = Player(0, 0, 0, 0, "Player", 10)
 
 while True:
     action = get_player_action()
