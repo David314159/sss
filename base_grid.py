@@ -2,7 +2,7 @@ from typing import Any
 
 
 class BaseGrid:
-    def __init__(self, rows: int, cols: int, default_value: Any):
+    def __init__(self, rows: int, cols: int, default_value = None):
         self.rows = rows
         self.cols = cols
         self.vals = [([default_value] * cols)] * rows

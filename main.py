@@ -1,50 +1,53 @@
 from enum import Enum, auto
 
+from action import Action, ActionType, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
 from directions import Direction
 from player import Player
-
-
-class Action(Enum):
-    MOVE = auto()
-    INTERACT = auto()
-    ABILITY = auto()
-    ATTACK = auto()
 
 
 class OOGAction(Enum):
     QUIT = auto()
 
-
-def get_player_action() -> Action | OOGAction:
-    action_int = int(input(
-        """What do you do?
+def print_menu(player: Player):
+    print(f"""
+        It's your turn.
+        You are at ({player.x_square}, {player.y_square}).
+        You have {player.action_points} action points.
+        What do you do?
         1. Move
         2. Interact
         3. Use ability
         4. Attack
-        5. Exit
-        """
-    ))
+        5. Pass
+        6. Exit
+        """)
+
+def get_player_action(player: Player) -> Action | OOGAction:
+    action_int = int(input())
 
     match action_int:
         case 1:
-            return Action.MOVE
+            return MOVE_ACTION
         case 2:
-            return Action.INTERACT
+            return INTERACT_ACTION
         case 3:
-            return Action.ABILITY
+            return ABILITY_ACTION
         case 4:
-            return Action.ATTACK
+            return ATTACK_ACTION
         case 5:
+            return PASS_ACTION
+        case 6:
             return OOGAction.QUIT
         case _:
             print("Invalid option")
-            get_player_action()
+            get_player_action(player)
 
-
-def do_player_action(player: Player):
-    match action:
-        case Action.MOVE:
+def do_player_action(player: Player, action: Action):
+    player.action_points -= action.cost
+    if player.action_points < 0:
+        raise ValueError("Negative action points")
+    match action.action_type:
+        case MOVE_ACTION.action_type:
             direction = Direction.abbreviation_to_enum(
                 input("Which direction do you want to move? ")
             )
@@ -54,13 +57,19 @@ def do_player_action(player: Player):
                     input("Which direction do you want to move? ")
                 )
             player.move_squares(direction, 1)
-            print(f"X:{player.x_square} Y:{player.y_square}")
 
 
-player = Player(0, 0, 0, 0, "Player", 10)
+
+
+player = Player(0, 0, 0, 0, "Player")
 
 while True:
-    action = get_player_action()
+    print_menu(player)
+    action = get_player_action(player)
     if action == OOGAction.QUIT:
         break
-    do_player_action(player)
+    while player.action_points < action.cost:
+        print("You do not have enough action points. Take a different action or pass.")
+        print_menu(player)
+        action = get_player_action(player)
+    do_player_action(player, action)

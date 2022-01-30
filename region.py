@@ -4,7 +4,7 @@ from square import Square
 
 class Region(BaseGrid):
     def __init__(self, rows: int, cols: int):
-        super().__init__(rows, cols, Square())
+        super().__init__(rows, cols)
         self.entity_positions = {}
 
     def __repr__(self):
