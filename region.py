@@ -1,5 +1,4 @@
 from base_grid import BaseGrid
-from square import Square
 
 
 class Region(BaseGrid):

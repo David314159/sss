@@ -76,42 +76,42 @@ class TestPlayer(SSSTest):
 
     def once_test_move_squares(self):
         self.assertMovement(
-            Direction.NORTH,
+            direction=Direction.NORTH,
             x_expected_change=NumChange.STAY,
             y_expected_change=NumChange.INCREASE
         )
         self.assertMovement(
-            Direction.NORTHEAST,
+            direction=Direction.NORTHEAST,
             x_expected_change=NumChange.INCREASE,
             y_expected_change=NumChange.INCREASE
         )
         self.assertMovement(
-            Direction.EAST,
+            direction=Direction.EAST,
             x_expected_change=NumChange.INCREASE,
             y_expected_change=NumChange.STAY
         )
         self.assertMovement(
-            Direction.SOUTHEAST,
+            direction=Direction.SOUTHEAST,
             x_expected_change=NumChange.INCREASE,
             y_expected_change=NumChange.DECREASE
         )
         self.assertMovement(
-            Direction.SOUTH,
+            direction=Direction.SOUTH,
             x_expected_change=NumChange.STAY,
             y_expected_change=NumChange.DECREASE
         )
         self.assertMovement(
-            Direction.SOUTHWEST,
+            direction=Direction.SOUTHWEST,
             x_expected_change=NumChange.DECREASE,
             y_expected_change=NumChange.DECREASE
         )
         self.assertMovement(
-            Direction.WEST,
+            direction=Direction.WEST,
             x_expected_change=NumChange.DECREASE,
             y_expected_change=NumChange.STAY
         )
         self.assertMovement(
-            Direction.NORTHWEST,
+            direction=Direction.NORTHWEST,
             x_expected_change=NumChange.DECREASE,
             y_expected_change=NumChange.INCREASE
         )

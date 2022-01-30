@@ -1,12 +1,13 @@
 from enum import Enum, auto
 
-from action import Action, ActionType, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
+from action import Action, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
 from directions import Direction
 from player import Player
 
 
 class OOGAction(Enum):
     QUIT = auto()
+
 
 def print_menu(player: Player):
     print(f"""
@@ -21,6 +22,7 @@ def print_menu(player: Player):
         5. Pass
         6. Exit
         """)
+
 
 def get_player_action(player: Player) -> Action | OOGAction:
     action_int = int(input())
@@ -42,6 +44,7 @@ def get_player_action(player: Player) -> Action | OOGAction:
             print("Invalid option")
             get_player_action(player)
 
+
 def do_player_action(player: Player, action: Action):
     player.action_points -= action.cost
     if player.action_points < 0:
@@ -57,8 +60,6 @@ def do_player_action(player: Player, action: Action):
                     input("Which direction do you want to move? ")
                 )
             player.move_squares(direction, 1)
-
-
 
 
 player = Player(0, 0, 0, 0, "Player")

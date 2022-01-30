@@ -1,5 +1,6 @@
 from directions import Direction
 
+
 class Entity:
     def __init__(self, x_square: int, x_region: int, y_square: int, y_region: int, name: str):
         self.x_square = x_square
