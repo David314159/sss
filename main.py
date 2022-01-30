@@ -62,15 +62,22 @@ def do_player_action(player: Player, action: Action):
             player.move_squares(direction, 1)
 
 
-player = Player(0, 0, 0, 0, "Player")
-
-while True:
+def take_turn(player: Player):
     print_menu(player)
     action = get_player_action(player)
     if action == OOGAction.QUIT:
-        break
+        exit(0)
     while player.action_points < action.cost:
         print("You do not have enough action points. Take a different action or pass.")
         print_menu(player)
         action = get_player_action(player)
     do_player_action(player, action)
+
+
+def run_game():
+    player = Player(0, 0, 0, 0, "Player")
+    while True:
+        take_turn(player)
+
+
+run_game()
