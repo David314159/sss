@@ -1,11 +1,11 @@
 from enum import Enum, auto
 
-from action import Action, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
+from action import GameAction, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
 from directions import Direction
 from player import Player
 
 
-class OOGAction(Enum):
+class ProgramAction(Enum):
     QUIT = auto()
 
 
@@ -24,7 +24,7 @@ def print_menu(player: Player):
         """)
 
 
-def get_player_action(player: Player) -> Action | OOGAction:
+def get_player_action(player: Player) -> GameAction | ProgramAction:
     action_int = int(input())
 
     match action_int:
@@ -39,16 +39,17 @@ def get_player_action(player: Player) -> Action | OOGAction:
         case 5:
             return PASS_ACTION
         case 6:
-            return OOGAction.QUIT
+            return ProgramAction.QUIT
         case _:
             print("Invalid option")
             get_player_action(player)
 
 
-def do_player_action(player: Player, action: Action):
+def do_player_action(player: Player, action: GameAction):
     player.action_points -= action.cost
     if player.action_points < 0:
         raise ValueError("Negative action points")
+
     match action.action_type:
         case MOVE_ACTION.action_type:
             direction = Direction.abbreviation_to_enum(
@@ -65,7 +66,7 @@ def do_player_action(player: Player, action: Action):
 def take_turn(player: Player):
     print_menu(player)
     action = get_player_action(player)
-    if action == OOGAction.QUIT:
+    if action == ProgramAction.QUIT:
         exit(0)
     while player.action_points < action.cost:
         print("You do not have enough action points. Take a different action or pass.")

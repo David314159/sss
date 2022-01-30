@@ -1,7 +1,7 @@
 from enum import Enum, auto
 
 
-class ActionType(Enum):
+class GameActionType(Enum):
     MOVE = auto()
     INTERACT = auto()
     ABILITY = auto()
@@ -9,14 +9,14 @@ class ActionType(Enum):
     PASS = auto()
 
 
-class Action:
-    def __init__(self, cost: int, action_type: ActionType):
+class GameAction:
+    def __init__(self, action_type: GameActionType, cost: int):
         self.cost = cost
         self.action_type = action_type
 
 
-MOVE_ACTION = Action(5, ActionType.MOVE)
-INTERACT_ACTION = Action(2, ActionType.INTERACT)
-ABILITY_ACTION = Action(5, ActionType.ABILITY)
-ATTACK_ACTION = Action(3, ActionType.ATTACK)
-PASS_ACTION = Action(0, ActionType.PASS)
+MOVE_ACTION = GameAction(GameActionType.MOVE, 5)
+INTERACT_ACTION = GameAction(GameActionType.INTERACT, 2)
+ABILITY_ACTION = GameAction(GameActionType.ABILITY, 5)
+ATTACK_ACTION = GameAction(GameActionType.ATTACK, 3)
+PASS_ACTION = GameAction(GameActionType.PASS, 0)
