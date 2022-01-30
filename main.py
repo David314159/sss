@@ -64,21 +64,28 @@ def do_player_action(player: Player, action: GameAction):
 
 
 def take_turn(player: Player):
+    player.action_points = player.MAX_ACTION_POINTS
+
     print_menu(player)
     action = get_player_action(player)
-    if action == ProgramAction.QUIT:
-        exit(0)
-    while player.action_points < action.cost:
-        print("You do not have enough action points. Take a different action or pass.")
+    while action != PASS_ACTION:
+        if action == ProgramAction.QUIT:
+            exit(0)
+        if player.action_points >= action.cost:
+            do_player_action(player, action)
+        else:
+            print("You do not have enough action points. Take a different action or pass.")
         print_menu(player)
         action = get_player_action(player)
-    do_player_action(player, action)
 
 
 def run_game():
-    player = Player(0, 0, 0, 0, "Player")
+    player: Player = Player(0, 0, 0, 0, "Player")
+    turn_num: int = 1
     while True:
+        print(f"TURN {turn_num}")
         take_turn(player)
+        turn_num += 1
 
 
 run_game()
