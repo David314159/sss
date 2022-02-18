@@ -3,8 +3,8 @@ from enum import Enum, auto
 from random import randint
 from typing import Callable, Any
 
-from directions import Direction
-from player import Player
+from positions.directions import Direction
+from entities.player import Player
 
 
 class NumChange(Enum):

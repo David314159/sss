@@ -1,9 +1,9 @@
 from enum import Enum, auto
 
-from action import GameAction, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
-from directions import Direction
-from player import Player
-from map import global_map
+from entities.action import GameAction, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
+from positions.directions import Direction
+from entities.player import Player
+from positions.map import global_map
 
 
 class ProgramAction(Enum):
@@ -87,7 +87,5 @@ def run_game():
         print(f"TURN {turn_num}")
         take_turn(player)
         turn_num += 1
-        print(global_map.vals)
-
 
 run_game()

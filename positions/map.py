@@ -1,5 +1,5 @@
-from base_grid import BaseGrid
-from region import Region
+from positions.base_grid import BaseGrid
+from positions.region import Region
 
 
 class Map(BaseGrid):

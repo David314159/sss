@@ -1,7 +1,7 @@
-from directions import Direction
-from map import global_map
-from region import Region
-from square import Square
+from positions.directions import Direction
+from positions.map import global_map
+from positions.region import Region
+from positions.square import Square
 
 
 class Entity:

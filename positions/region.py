@@ -1,5 +1,5 @@
-from base_grid import BaseGrid
-from square import Square
+from positions.base_grid import BaseGrid
+from positions.square import Square
 
 
 class Region(BaseGrid):
