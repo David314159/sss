@@ -1,12 +1,12 @@
 from enum import Enum, auto
 
-from entities.action import GameAction, MOVE_ACTION, INTERACT_ACTION, ABILITY_ACTION, ATTACK_ACTION, PASS_ACTION
+from gameplay.action import GameAction, GameActionType
+from entities.npc import NPC
 from positions.directions import Direction
 from entities.player import Player
-from positions.map import global_map
 
 
-class ProgramAction(Enum):
+class ProgramActionType(Enum):
     QUIT = auto()
 
 
@@ -14,7 +14,6 @@ def print_menu(player: Player):
     print(f"""
         It's your turn.
         You are at ({player.x_square}, {player.y_square}).
-        You have {player.action_points} action points.
         What do you do?
         1. Move
         2. Interact
@@ -25,67 +24,67 @@ def print_menu(player: Player):
         """)
 
 
-def get_player_action(player: Player) -> GameAction | ProgramAction:
+def get_player_action_type(player: Player) -> GameActionType | ProgramActionType:
     action_int = int(input())
 
     match action_int:
         case 1:
-            return MOVE_ACTION
+            return GameActionType.MOVE
         case 2:
-            return INTERACT_ACTION
+            return GameActionType.INTERACT
         case 3:
-            return ABILITY_ACTION
+            return GameActionType.ABILITY
         case 4:
-            return ATTACK_ACTION
+            return GameActionType.ATTACK
         case 5:
-            return PASS_ACTION
+            return GameActionType.PASS
         case 6:
-            return ProgramAction.QUIT
+            return ProgramActionType.QUIT
         case _:
             print("Invalid option")
-            get_player_action(player)
+            get_player_action_type(player)
 
 
-def do_player_action(player: Player, action: GameAction):
-    player.action_points -= action.cost
-    if player.action_points < 0:
-        raise ValueError("Negative action points")
+def get_player_action(action_type: GameActionType):
+    match action_type:
+        case GameActionType.MOVE:
+            get_move_action()
+        case GameActionType.INTERACT:
+            get_interact_action()
+        case GameActionType.ABILITY:
+            get_ability_action()
+        case GameActionType.ATTACK:
+            get_attack_action()
 
-    match action.action_type:
-        case MOVE_ACTION.action_type:
-            direction = Direction.abbreviation_to_enum(
-                input("Which direction do you want to move? ")
-            )
-            while direction == Direction.INVALID:
-                print("Invalid direction")
-                direction = Direction.abbreviation_to_enum(
-                    input("Which direction do you want to move? ")
-                )
-            player.move_squares(direction, 1)
+
+def get_move_action():
+    direction: Direction = Direction.abbreviation_to_enum(
+        input("Which direction do you want to move? ")
+    )
+    while direction == Direction.INVALID:
+        print("Invalid direction")
+        direction = Direction.abbreviation_to_enum(
+            input("Which direction do you want to move? ")
+        )
+    num_squares: int = int(input("How many squares do you want to move?"))
 
 
 def take_turn(player: Player):
-    player.action_points = player.MAX_ACTION_POINTS
-
     print_menu(player)
     action = get_player_action(player)
-    while action != PASS_ACTION:
-        if action == ProgramAction.QUIT:
-            exit(0)
-        if player.action_points >= action.cost:
-            do_player_action(player, action)
-        else:
-            print("You do not have enough action points. Take a different action or pass.")
-        print_menu(player)
-        action = get_player_action(player)
+    if action == ProgramActionType.QUIT:
+        exit(0)
+    do_player_action(player, action)
+    print_menu(player)
+    action = get_player_action(player)
 
 
 def run_game():
     player: Player = Player(0, 0, 0, 0, "Player")
-    turn_num: int = 1
+    npc: NPC = NPC(1, 0, 0, 0, "NPC")
     while True:
-        print(f"TURN {turn_num}")
+        print(f"")
         take_turn(player)
-        turn_num += 1
+
 
 run_game()

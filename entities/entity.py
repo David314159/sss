@@ -1,3 +1,4 @@
+from gameplay.signal import Signal, MeleeAttack
 from positions.directions import Direction
 from positions.map import global_map
 from positions.region import Region
@@ -54,3 +55,4 @@ class Entity:
             case Direction.SOUTHWEST:
                 self.move_squares(Direction.SOUTH, num_squares)
                 self.move_squares(Direction.WEST, num_squares)
+

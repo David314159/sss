@@ -27,3 +27,9 @@ Amazon - Support
 Thief - Disruption
 Ranger - Tank
 
+
+David's idea:
+Signals are very specific, like "You are fireballed with 5 damage"
+
+Jacob's idea:
+Signals are generic, lik
