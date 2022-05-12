@@ -1,18 +1,20 @@
 from entities.entity import Entity
 from gameplay.action import GameAction
+from positions import region
+from positions.map import Map
+from positions.region import Region
 
 
 class Game:
-    def __init__(self, entities: list[Entity]):
+    def __init__(self, entities: set[Entity], region: Region, map: Map):
         self.tick_num: int = 0
-        self.actions: set[GameAction] = set()
         self.entities = entities
+        self.region = region
+        self.map = map
 
     def tick(self):
         for entity in self.entities:
             entity.tick()
-        for action in self.actions:
-            action.tick()
         self.tick_num += 1
 
     def action_started(self, action: GameAction):

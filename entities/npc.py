@@ -2,4 +2,9 @@ from entities.being import Being
 
 
 class NPC(Being):
-    pass
+    def tick(self):
+
+        super().tick()
+
+
+

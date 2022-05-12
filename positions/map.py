@@ -7,7 +7,6 @@ class Map(BaseGrid):
         super().__init__(rows, cols)
         for row in range(0, rows):
             for col in range(0, cols):
-                self.vals[row][col] = Region(5, 5)
+                self.vals[row][col] = Region(10, 10)
 
-
-global_map = Map(50, 50)
+global_map = Map(5, 5);
