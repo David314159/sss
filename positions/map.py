@@ -9,4 +9,5 @@ class Map(BaseGrid):
             for col in range(0, cols):
                 self.vals[row][col] = Region(10, 10)
 
-global_map = Map(5, 5);
+global_map = Map(5, 5)
+

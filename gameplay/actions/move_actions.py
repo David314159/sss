@@ -44,3 +44,4 @@ def relative_teleport(entity: Entity, direction: Enum, num_squares):
         case Direction.SOUTHWEST:
             relative_teleport(entity, Direction.SOUTH, num_squares)
             relative_teleport(entity, Direction.WEST, num_squares)
+

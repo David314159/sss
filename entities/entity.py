@@ -1,3 +1,4 @@
+from gameplay.signal import Signal
 from positions.region import Region
 from positions.square import Square
 from positions.map import global_map
@@ -39,4 +40,5 @@ class Entity:
             else:
                 self.current_action.tick()
 
-
+    def handle_signal(self, signal: Signal):
+        print("I am handling signal", signal)
