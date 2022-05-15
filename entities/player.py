@@ -1,10 +1,10 @@
-from entities.being import Being
+from entities.entity import Entity
 from positions.directions import Direction
 from gameplay.action import GameAction, GameActionType
 import gameplay.actions.move_actions as move_actions
 
 
-class Player(Being):
+class Player(Entity):
 
     def print_menu(self):
         print(f"""

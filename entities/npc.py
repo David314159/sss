@@ -1,9 +1,8 @@
-from entities.being import Being
+from entities.entity import Entity
 
 
-class NPC(Being):
+class NPC(Entity):
     def tick(self):
-
         super().tick()
 
 
