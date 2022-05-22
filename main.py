@@ -5,7 +5,6 @@ from entities.npc import NPC
 from gameplay.game import Game, game
 from positions.directions import Direction
 from entities.player import Player
-from positions.map import Map
 
 
 class ProgramActionType(Enum):

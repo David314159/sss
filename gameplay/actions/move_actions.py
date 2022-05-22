@@ -1,14 +1,12 @@
 from enum import Enum
 from entities.entity import Entity
 from positions.directions import Direction
-from positions.map import global_map
 from positions.region import Region
 from positions.square import Square
 
 
-def absolute_teleport(entity: Entity, x_square: int, y_square: int):
+def absolute_teleport(entity: Entity, x_square: int, y_square: int, region: Region):
     # Remove entity from current square
-    current_region: Region = global_map.get_val(entity.x_region, entity.y_region)
     current_square: Square = current_region.get_val(entity.x_square, entity.y_square)
     current_square.entities.remove(entity)
 

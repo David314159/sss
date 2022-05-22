@@ -4,15 +4,14 @@ from entities.entity import Entity
 from gameplay.action import GameAction
 from gameplay.signal import Signal
 from positions import region
-from positions.map import Map, global_map
 from positions.region import Region
 
+
 class Game:
-    def __init__(self, entities: set[Entity], region: Region, map: Map):
+    def __init__(self, entities: set[Entity], region: Region):
         self.tick_num: int = 0
         self.entities = entities
         self.region = region
-        self.map = map
 
     def tick(self):
         for entity in self.entities:
@@ -24,7 +23,9 @@ class Game:
             if should_send_to(entity):
                 entity.handle_signal(signal)
 
-    def ping_everything(self):
+    def targeted_signal(self, signal: Signal, target: Entity):
+        target.handle_signal(signal)
+        
         game.send_signal(Signal(), lambda entity: True)
 
     def action_started(self, action: GameAction):
@@ -39,4 +40,5 @@ class Game:
     def entity_disappears(self, entity: Entity):
         self.entities.remove(entity)
 
-game = Game(set(), global_map.get_val(0, 0), global_map)
+
+game = Game(set(), Region(50, 50))

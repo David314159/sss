@@ -1,8 +1,6 @@
 from gameplay.signal import Signal
 from positions.region import Region
 from positions.square import Square
-from positions.map import global_map
-
 
 class Entity:
     def __init__(self, x_square: int, x_region: int, y_square: int, y_region: int, name: str, current_action = None):
