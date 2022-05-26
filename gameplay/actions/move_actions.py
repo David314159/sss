@@ -1,9 +1,6 @@
 from enum import Enum
 from entities.entity import Entity
 from positions.directions import Direction
-from positions.map import global_map
-from positions.region import Region
-from positions.square import Square
 
 
 def absolute_teleport(entity: Entity, x_square: int, y_square: int):

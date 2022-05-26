@@ -3,15 +3,11 @@ from typing import Callable
 from entities.entity import Entity
 from gameplay.action import GameAction
 from gameplay.signal import Signal
-from positions import region
-from positions.map import Map, global_map
-from positions.region import Region
 
 class Game:
-    def __init__(self, entities: set[Entity], region: Region, map: Map):
+    def __init__(self, entities: set[Entity]):
         self.tick_num: int = 0
         self.entities = entities
-        self.region = region
         self.map = map
 
     def tick(self):
@@ -39,4 +35,4 @@ class Game:
     def entity_disappears(self, entity: Entity):
         self.entities.remove(entity)
 
-game = Game(set(), global_map.get_val(0, 0), global_map)
+game = Game(set())
