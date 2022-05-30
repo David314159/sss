@@ -1,11 +1,9 @@
 from gameplay.signal import Signal
 
 
-
 class Entity:
     def __init__(self, name: str, current_action = None):
         self.current_action = current_action
-
         self.name = name
 
     def tick(self):

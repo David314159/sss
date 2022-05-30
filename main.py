@@ -21,7 +21,8 @@ def quit_game():
 
 
 def run_game():
-    player: Player = Player("Player")
+    graphics.window.init_graphics()
+    player: Player = Player()
     npc: NPC = NPC("enn pee cee")
     game.entities.add(player)
     game.entities.add(npc)
