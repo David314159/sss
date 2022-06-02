@@ -1,8 +1,12 @@
 from typing import Callable
 
+import pygame
+
 from entities.entity import Entity
 from gameplay.action import GameAction
 from gameplay.signal import Signal
+from input import detect_wasd
+
 
 class Game:
     def __init__(self, entities: set[Entity]):
@@ -23,16 +27,11 @@ class Game:
     def ping_everything(self):
         game.send_signal(Signal(), lambda entity: True)
 
-    def action_started(self, action: GameAction):
-        self.actions.add(action)
+    def spawn_entity(self, entity: Entity):
+        self.entities.add(entity)
 
-    def action_failed(self, action: GameAction):
-        self.actions.remove(action)
-
-    def entity_appears(self, entity: Entity):
-        self.entities.append(entity)
-
-    def entity_disappears(self, entity: Entity):
+    def despawn_entity(self, entity: Entity):
         self.entities.remove(entity)
+
 
 game = Game(set())

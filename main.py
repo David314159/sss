@@ -22,10 +22,10 @@ def quit_game():
 
 def run_game():
     graphics.window.init_graphics()
-    player: Player = Player()
-    npc: NPC = NPC("enn pee cee")
-    game.entities.add(player)
-    game.entities.add(npc)
+    player: Player = Player(5, 2)
+    npc: NPC = NPC("enn pee cee", 0, 0)
+    game.spawn_entity(player)
+    game.spawn_entity(npc)
     game.ping_everything()
     while True:
         graphics.window.tick_graphics()
