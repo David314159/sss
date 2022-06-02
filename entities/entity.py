@@ -22,7 +22,7 @@ class Entity:
 
     def tick(self):
         if self.current_action is not None:
-            if self.current_action.is_finished():
+            if self.current_action.finished:
                 self.current_action = None
             else:
                 self.current_action.tick()

@@ -1,6 +1,6 @@
 from enum import Enum, auto
 from typing import Callable, Any
-
+from gameplay.clock import clock
 
 
 class GameActionType(Enum):
@@ -14,18 +14,19 @@ class GameActionType(Enum):
 
 
 class GameAction:
-    def __init__(self, action_type: GameActionType, ticks_remaining: int,
+    def __init__(self, action_type: GameActionType, resolve_time: int,
                  function_to_call: Callable[[], Any]):
+        # resolve_time is in milliseconds
         self.action_type = action_type
-        self.ticks_remaining = ticks_remaining
         self.function_to_call = function_to_call
+        self.start_time = clock.time
+        self.resolve_time = resolve_time
+        self.finished = False
 
     def tick(self):
-        self.ticks_remaining -= 1
-        if self.ticks_remaining == 0:
+        if clock.time - self.start_time >= self.resolve_time and not self.finished:
             self.function_to_call()
+            self.finished = True
 
-    def is_finished(self):
-        return self.ticks_remaining == 0
 
 

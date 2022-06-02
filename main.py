@@ -3,6 +3,7 @@ from enum import Enum, auto
 
 import graphics.window
 from entities.npc import NPC
+from gameplay.action import GameAction, GameActionType
 from gameplay.game import Game, game
 from entities.player import Player
 
@@ -22,12 +23,15 @@ def quit_game():
 
 def run_game():
     graphics.window.init_graphics()
-    player: Player = Player(5, 2)
+    resolves_in_5_sec = GameAction(GameActionType.MOVE, 5000, lambda: print("resolved"))
+    player: Player = Player(5, 2, current_action=resolves_in_5_sec)
     npc: NPC = NPC("enn pee cee", 0, 0)
     game.spawn_entity(player)
     game.spawn_entity(npc)
     game.ping_everything()
+    pygame.init()
     while True:
+        time.sleep(0.1)
         graphics.window.tick_graphics()
         game.tick()
 

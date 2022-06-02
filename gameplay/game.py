@@ -1,3 +1,4 @@
+import time
 from typing import Callable
 
 import pygame
@@ -6,7 +7,8 @@ from entities.entity import Entity
 from gameplay.action import GameAction
 from gameplay.signal import Signal
 from input import detect_wasd
-
+from pygame import time
+from gameplay.clock import clock
 
 class Game:
     def __init__(self, entities: set[Entity]):
@@ -17,6 +19,7 @@ class Game:
     def tick(self):
         for entity in self.entities:
             entity.tick()
+        clock.tick()
         self.tick_num += 1
 
     def send_signal(self, signal: Signal, should_send_to: Callable[[Entity], bool]):
