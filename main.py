@@ -10,6 +10,8 @@ from entities.player import Player
 import pygame
 import time
 
+from positions.directions import Direction
+
 
 class ProgramActionType(Enum):
     QUIT = auto()
@@ -37,6 +39,7 @@ def run_game():
         game.tick()
         print("x:", player.x_pos)
         print("y:", player.y_pos)
+        print(Direction.SOUTH)
 
 
 run_game()
