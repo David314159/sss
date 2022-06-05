@@ -30,10 +30,12 @@ def run_game():
     game.spawn_entity(npc)
     game.ping_everything()
     pygame.init()
+
     while True:
-        time.sleep(0.1)
+        time.sleep(1)
         graphics.window.tick_graphics()
         game.tick()
+
 
 run_game()
 # comment for test commit
