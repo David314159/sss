@@ -38,15 +38,18 @@ class Player(Entity):
             case direction.SOUTH:
                 self.y_pos -= self.speed
 
+
     def start_moving(self, direction: Direction):
         self.call_continuously("player move", lambda: self.move(direction), 50)
 
     def stop_moving(self):
+        func_specs_to_remove = set()
         for func_spec in self.to_call_continuously:
             if func_spec.name == "player move":
-                self.to_call_continuously.remove(func_spec)
+                func_specs_to_remove.add(func_spec)
+        for func_spec in func_specs_to_remove:
+            self.to_call_continuously.remove(func_spec)
 
     def tick(self):
-
         super().tick()
 

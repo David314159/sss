@@ -11,8 +11,17 @@ class ContCalledFunc:
         self.func = func
         self.call_every = call_every
         self.stop_after = stop_after
-        self.start_time = time.get_ticks()
+        self.start_time = clock.time
         self.effect_timer = 0
+
+    def tick(self):
+        self.effect_timer += clock.time_since_last_tick
+        if self.effect_timer > self.call_every:
+            self.func()
+            self.effect_timer -= self.call_every
+
+    def is_finished(self):
+        return self.stop_after is not None and (clock.time - self.start_time) > self.stop_after
 
 
 class Entity:
@@ -48,10 +57,12 @@ class Entity:
                 self.current_action = None
             else:
                 self.current_action.tick()
-
+        
+        func_specs_to_remove = set()
         for func_spec in self.to_call_continuously:
-            if func_spec.effect_timer > func_spec.call_every:
-                func_spec.func()
-                func_spec.effect_timer -= func_spec.call_every
-            if (clock.time - func_spec.start_time) > func_spec.stop_after:
-                self.to_call_continuously.remove(func_spec)
+            func_spec.tick()
+            if func_spec.is_finished():
+                func_specs_to_remove.add(func_spec)
+
+        for func_spec in func_specs_to_remove:
+            self.to_call_continuously.remove(func_spec)

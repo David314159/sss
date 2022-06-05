@@ -35,6 +35,8 @@ def run_game():
         time.sleep(1)
         graphics.window.tick_graphics()
         game.tick()
+        print("x:", player.x_pos)
+        print("y:", player.y_pos)
 
 
 run_game()
