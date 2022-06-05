@@ -2,16 +2,13 @@ import sys
 from enum import Enum, auto
 
 import graphics.window
+from gameplay.game import *
 from entities.npc import NPC
 from gameplay.action import GameAction, GameActionType
-from gameplay.game import Game, game
 from entities.player import Player
 
 import pygame
 import time
-
-from positions.directions import Direction
-
 
 class ProgramActionType(Enum):
     QUIT = auto()
@@ -28,6 +25,7 @@ def run_game():
     resolves_in_5_sec = GameAction(GameActionType.MOVE, 5000, lambda: print("resolved"))
     player: Player = Player(5, 2, current_action=resolves_in_5_sec)
     npc: NPC = NPC("enn pee cee", 0, 0)
+    game = Game(set(), player)
     game.spawn_entity(player)
     game.spawn_entity(npc)
     game.ping_everything()
@@ -39,7 +37,6 @@ def run_game():
         game.tick()
         print("x:", player.x_pos)
         print("y:", player.y_pos)
-        print(Direction.SOUTH)
 
 
 run_game()

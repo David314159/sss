@@ -3,16 +3,16 @@ import pygame
 
 class Input:
     def __init__(self):
-        self.pressed_keys = pygame.key.get_pressed()
+        self.keys_pressed = pygame.key.get_pressed()
 
-    def update_pressed_keys(self):
-        self.pressed_keys = pygame.key.get_pressed()
-        print(self.pressed_keys[pygame.K_w])
+    def update_keys_pressed(self):
+        self.keys_pressed = pygame.key.get_pressed()
+        print(self.keys_pressed[pygame.K_w])
 
     def detect_keys(self, *keys):
         output = set()
         for k in keys:
-            if self.pressed_keys[k]:
+            if self.keys_pressed[k]:
                 output.add(k)
         return output
 
