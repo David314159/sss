@@ -7,7 +7,6 @@ class Input:
 
     def update_keys_pressed(self):
         self.keys_pressed = pygame.key.get_pressed()
-        print(self.keys_pressed[pygame.K_w])
 
     def detect_keys(self, *keys):
         output = set()

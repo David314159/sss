@@ -42,10 +42,10 @@ class Entity:
         self.to_call_continuously: set[ContCalledFunc] = set()
 
         # Stats
-        self.speed = 5
+        self.speed = 3
 
         # Enable movement
-        self.to_call_continuously.add(ContCalledFunc("movement", self.move, 500))
+        self.to_call_continuously.add(ContCalledFunc("movement", self.move, 20))
 
     def call_continuously(self, func_name: str, func: Callable[[], Any], call_every: int, stop_after: int = None):
         self.to_call_continuously.add(ContCalledFunc(func_name, func, call_every, stop_after))
@@ -73,7 +73,7 @@ class Entity:
 
     def move(self):
         self.x_pos += self.x_velocity
-        self.y_pos +=  self.y_velocity
+        self.y_pos += self.y_velocity
 
     def tick(self):
         if self.current_action is not None:

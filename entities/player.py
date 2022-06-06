@@ -13,15 +13,16 @@ class Player(Entity):
     def player_wasd_input(self, wasd_pressed: set):
         self.set_velocity(0, 0)
         if pygame.K_w in wasd_pressed:
-            self.y_velocity += self.speed
+            self.y_velocity -= self.speed
         if pygame.K_a in wasd_pressed:
             self.x_velocity -= self.speed
         if pygame.K_s in wasd_pressed:
-            self.y_velocity -= self.speed
+            self.y_velocity += self.speed
         if pygame.K_d in wasd_pressed:
             self.x_velocity += self.speed
 
 
     def tick(self):
+        self.sprite.update_pos(self.x_pos, self.y_pos)
         super().tick()
 

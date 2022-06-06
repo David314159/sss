@@ -9,7 +9,7 @@ from entities.player import Player
 import pygame
 import time
 
-TPS = 0.5
+TPS = 20
 
 class ProgramActionType(Enum):
     QUIT = auto()
@@ -35,8 +35,6 @@ def run_game():
         time.sleep(1 / TPS)
         graphics.window.tick_graphics()
         game.tick()
-        print("x:", player.x_pos)
-        print("y:", player.y_pos)
 
 
 run_game()
