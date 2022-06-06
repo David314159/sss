@@ -2,7 +2,6 @@ from enum import Enum, auto
 from typing import Callable, Any
 from gameplay.clock import clock
 
-
 class GameActionType(Enum):
     MOVE = auto()
     INTERACT = auto()

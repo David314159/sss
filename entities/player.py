@@ -2,8 +2,6 @@ import pygame
 
 from entities.entity import Entity
 from graphics import sprite
-from positions.directions import Direction
-from math import ceil, sqrt
 
 class Player(Entity):
     def __init__ (self, x_pos: int, y_pos: int, current_action = None):

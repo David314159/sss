@@ -1,13 +1,10 @@
-import time
-from typing import Callable, Any, Sequence
+from typing import Callable
 
 import pygame
 
 from entities.entity import Entity
-from gameplay.action import GameAction
 from gameplay.signal import Signal
 from input import input
-from pygame import time
 from gameplay.clock import clock
 
 

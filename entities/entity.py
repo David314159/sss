@@ -1,9 +1,7 @@
 from typing import Callable, Any
 
 from gameplay.clock import clock
-from positions.directions import Direction
 from gameplay.signal import Signal
-from pygame import time
 
 class ContCalledFunc:
     def __init__(self, name: str, func: Callable[[], Any], call_every: int, stop_after: int = None):
@@ -16,7 +14,7 @@ class ContCalledFunc:
 
     def tick(self):
         self.effect_timer += clock.time_since_last_tick
-        if self.effect_timer > self.call_every:
+        while self.effect_timer > 0:
             self.func()
             self.effect_timer -= self.call_every
 
@@ -47,7 +45,7 @@ class Entity:
         self.speed = 5
 
         # Enable movement
-        self.to_call_continuously.add(ContCalledFunc("movement", self.move, 50))
+        self.to_call_continuously.add(ContCalledFunc("movement", self.move, 500))
 
     def call_continuously(self, func_name: str, func: Callable[[], Any], call_every: int, stop_after: int = None):
         self.to_call_continuously.add(ContCalledFunc(func_name, func, call_every, stop_after))
