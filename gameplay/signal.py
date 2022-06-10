@@ -1,5 +1,12 @@
 class Signal:
-    def __init__(self, sender: "Entity" = None, damage: int = None, damage_type: str = None, ):
+
+    class NegativeDamageException(Exception):
+        pass
+
+    def __init__(self, sender: "Entity" = None, damage: int = 0, damage_type: str = None, ):
+        if damage is not None and damage < 0:
+            raise self.NegativeDamageException("Damage cannot be negative")
+
         self.sender = sender
 
         self.damage = damage

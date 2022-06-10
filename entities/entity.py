@@ -32,7 +32,11 @@ class ContCalledFunc:
 
 
 class Entity:
-    def __init__(self, name: str, x_pos: int, y_pos: int, current_action = None):
+    def __init__(self, name: str, x_pos: int, y_pos: int, current_action = None,
+                 max_health = 0, max_mana: int = 0,
+                 speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
+                 life_power: int = 0, storm_power: int = 0, death_power: int = 0, fire_power: int = 0, nature_power: int = 0,
+                 magic_power: int = 0):
 
         # Lasting, constant attributes
         self.name = name
@@ -50,8 +54,26 @@ class Entity:
         # Effects over time
         self.to_call_continuously: set[ContCalledFunc] = set()
 
-        # Stats
-        self.speed = 3
+        # Physical stats
+        self.speed = speed
+        self.toughness = toughness
+        self.dexterity = dexterity
+        self.strength = strength
+
+        # Mage stats
+        self.life_power = life_power
+        self.storm_power = storm_power
+        self.death_power = death_power
+        self.fire_power = fire_power
+        self.nature_power = nature_power
+        self.magic_power  = magic_power
+
+
+        # Resources
+        self.max_health = max_health
+        self.current_health =  max_health
+        self.max_mana = max_mana
+        self.current_mana = max_mana
 
         # Enable movement
         self.to_call_continuously.add(ContCalledFunc("movement", self.move, 20))
@@ -74,7 +96,8 @@ class Entity:
 
     def handle_signal(self, signal: Signal):
         # handle a signal from another entity or the game
-
+        if signal.damage > 0:
+            self.current_health -= signal.damage
         print("I am handling signal", signal)
 
     def set_x_velocity(self, x):

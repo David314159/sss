@@ -5,10 +5,7 @@ class Input:
     """Helper functions for detecting keyboard and mouse input."""
     def __init__(self):
         self.keys_pressed = pygame.key.get_pressed()
-
-    def update_keys_pressed(self):
-        """Updates the list of keys pressed. Should be called once every tick."""
-        self.keys_pressed = pygame.key.get_pressed()
+        self.mouse_buttons_pressed = pygame.mouse.get_pressed()
 
     def detect_keys(self, *keys):
         """
@@ -22,9 +19,18 @@ class Input:
                 output.add(k)
         return output
 
+    def detect_mouse_buttons(self):
+        return self.mouse_buttons_pressed
+
     def detect_wasd(self):
         """Returns a set of ints corresponding to which of the WASD keys are currently pressed."""
         return self.detect_keys(pygame.K_a, pygame.K_w, pygame.K_s, pygame.K_d)
 
+    def detect_qe(self):
+        return self.detect_keys(pygame.K_q, pygame.K_e)
+
+    def tick(self):
+        self.keys_pressed = pygame.key.get_pressed()
+        self.mouse_buttons_pressed = pygame.mouse.get_pressed()
 
 input = Input()

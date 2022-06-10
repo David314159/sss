@@ -9,7 +9,7 @@ from entities.player import Player
 import pygame
 import time
 
-TPS = 40
+TPS = 20
 """Ticks per second. All tick() methods should be called at this rate."""
 
 
@@ -30,7 +30,7 @@ def run_game():
     graphics.window.init_graphics()
     player: Player = Player(5, 2, current_action=None)
     npc: NPC = NPC("enn pee cee", 0, 0)
-    game = Game(set(), player)
+    game.set_player(player)
     game.spawn_entity(player)
     game.spawn_entity(npc)
     game.ping_everything()

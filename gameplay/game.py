@@ -9,23 +9,28 @@ from gameplay.clock import clock
 
 
 class Game:
-    def __init__(self, entities: set[Entity], player):
+    def __init__(self, entities: set[Entity]):
         # main game class
         # keeps track of entities loaded, signals, and the current gamestate
         self.tick_num: int = 0 # number of game ticks since the game was launched
         self.entities = entities # the set of entities in the game
-        self.player = player # the current player this client is taking input from
+        self.player = None
         self.keys_pressed: set = set() # keys pressed right now
+
+    def set_player(self, player):
+        self.player = player
 
     def tick(self):
         pygame.event.pump() # allows key input and graphics to change
-        input.update_keys_pressed() # update current list of pressed keys
+        input.tick()
         for entity in self.entities:
-            entity.tick() # tick all entities
-        clock.tick() # tick the clock
+            entity.tick()
+        clock.tick()
 
-        self.player.player_wasd_input(input.detect_wasd()) # take player WASD input
-        # this will get more complicated once thing affect player input (menus, ect)
+        self.player.wasd_input(input.detect_wasd()) # take player WASD input
+        # this will get more complicated once things affect player input (menus, ect)
+        self.player.qe_input(input.detect_qe())
+
         self.tick_num += 1
 
     def send_signal(self, signal: Signal, should_send_to: Callable[[Entity], bool]):
@@ -46,3 +51,6 @@ class Game:
     def despawn_entity(self, entity: Entity):
         # unload an entity
         self.entities.remove(entity)
+
+
+game = Game(set())
