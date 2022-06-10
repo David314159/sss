@@ -1,3 +1,9 @@
+# PyCharm config folder
 .idea/
+# Temporary Python files
 __pycache__/
+# Local Python virtual environment
 venv/
+# MacOS Finder config file
+.DS_Store
+
