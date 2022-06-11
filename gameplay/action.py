@@ -2,6 +2,7 @@ from enum import Enum, auto
 from typing import Callable, Any
 from gameplay.clock import clock
 
+
 class GameActionType(Enum):
 
     # types of in game actions
@@ -15,9 +16,9 @@ class GameActionType(Enum):
 
 
 class GameAction:
-    def __init__(self, action_type: GameActionType, resolve_time: int,
+    def __init__(self, name: str, action_type: GameActionType, resolve_time: int,
                  function_to_call: Callable[[], Any]):
-
+        self.name = name
         self.action_type = action_type # type of action
         self.function_to_call = function_to_call # function to call when action resolves
         self.start_time = clock.time # when the action began

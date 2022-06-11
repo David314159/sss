@@ -9,6 +9,8 @@ from entities.player import Player
 import pygame
 import time
 
+from graphics.sprite import SSSSprite
+
 TPS = 20
 """Ticks per second. All tick() methods should be called at this rate."""
 
@@ -28,8 +30,9 @@ def quit_game():
 def run_game():
     """The main function. Starts the program."""
     graphics.window.init_graphics()
-    player: Player = Player(5, 2, current_action=None, speed=5)
-    npc: NPC = NPC("enn pee cee", 0, 0)
+    player: Player = Player(x_pos=5, y_pos=2, current_action=None, speed=5, max_health=500, max_mana=500, strength=50)
+    npc: NPC = NPC("enn pee cee", x_pos=250, y_pos=250,  max_health=1000, max_mana=200,
+                   sprite=SSSSprite(img_path="goblin.jpeg", scale=(50, 50)))
     game.set_player(player)
     game.spawn_entity(player)
     game.spawn_entity(npc)

@@ -2,16 +2,23 @@ import pygame
 
 from entities.entity import Entity
 from gameplay.action import GameAction, GameActionType
-from graphics import sprite
 from gameplay.actions.innate import punch
+from graphics.sprite import SSSSprite
+
 
 class Player(Entity):
     def __init__ (self, x_pos: int, y_pos: int, current_action = None, *args, **kwargs):
-        self.sprite = sprite.PlayerSprite() # the player's avatar sprite
         self.action_slots = [None, None,
-                             lambda: GameAction(GameActionType.ATTACK, 1000, lambda: punch(self)), None]
+                             lambda: GameAction("Punch", GameActionType.ATTACK, 200, lambda: punch(self)), None]
 
-        super().__init__("Player", x_pos, y_pos, current_action, *args, **kwargs) # create an entity with these attributes
+        super().__init__(name="Player", x_pos=x_pos, y_pos=y_pos,
+                         sprite=SSSSprite(img_path="captain_alex.png", scale=(40, 80)),
+                         current_action=current_action,
+                         *args, **kwargs)
+
+    def set_action(self, action: GameAction):
+        if self.current_action is None or self.current_action.name != action.name:
+            self.current_action = action
 
     def wasd_input(self, wasd_pressed: set[int]):
         # handles the player's WASD input for moving
@@ -29,15 +36,6 @@ class Player(Entity):
 
     def qe_input(self, qe_pressed: set[int]):
         if pygame.K_q in qe_pressed and self.action_slots[2] is not None:
-            print("hi")
-            self.current_action = self.action_slots[2]()
+            self.set_action(self.action_slots[2]())
         if pygame.K_e in qe_pressed and self.action_slots[3] is not None:
-            self.current_action = self.action_slots[3]()
-
-    def tick(self):
-        # update sprite position
-        self.sprite.update_pos(self.x_pos, self.y_pos)
-        print(f"x velocity: {self.x_velocity}")
-        print(f"y velocity: {self.y_velocity}")
-
-        super().tick()
+            self.set_action(self.action_slots[3]())

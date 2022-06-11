@@ -1,5 +1,7 @@
 from typing import Callable, Any
 
+from graphics.sprite import SSSSprite
+
 from gameplay.clock import clock
 from gameplay.signal import Signal
 
@@ -31,9 +33,11 @@ class ContCalledFunc:
         return self.stop_after is not None and (clock.time - self.start_time) > self.stop_after
 
 
+
 class Entity:
-    def __init__(self, name: str, x_pos: int, y_pos: int, current_action = None,
-                 max_health = 0, max_mana: int = 0,
+    def __init__(self, name: str, x_pos: int, y_pos: int, sprite: SSSSprite,
+                 current_action = None,
+                 max_health = 0, max_mana: int = 0, max_energy: int = 0,
                  speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
                  life_power: int = 0, storm_power: int = 0, death_power: int = 0, fire_power: int = 0, nature_power: int = 0,
                  magic_power: int = 0):
@@ -41,15 +45,25 @@ class Entity:
         # Lasting, constant attributes
         self.name = name
 
+        # Graphics
+        self.sprite = sprite
+
         # Lasting, variable attributes
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.x_velocity = 0
         self.y_velocity = 0
 
+        # Resources
+        self.max_health = max_health
+        self.current_health =  max_health
+        self.max_mana = max_mana
+        self.current_mana = max_mana
+        self.max_energy = max_energy
+        self.current_energy = max_energy
+
         # Temporary states
         self.current_action = current_action
-        self.direction_moving = None
 
         # Effects over time
         self.to_call_continuously: set[ContCalledFunc] = set()
@@ -67,13 +81,6 @@ class Entity:
         self.fire_power = fire_power
         self.nature_power = nature_power
         self.magic_power  = magic_power
-
-
-        # Resources
-        self.max_health = max_health
-        self.current_health =  max_health
-        self.max_mana = max_mana
-        self.current_mana = max_mana
 
         # Enable movement
         self.to_call_continuously.add(ContCalledFunc("movement", self.move, 20))
@@ -98,7 +105,8 @@ class Entity:
         # handle a signal from another entity or the game
         if signal.damage > 0:
             self.current_health -= signal.damage
-        print("I am handling signal", signal)
+            print(f"{self.name} health: {self.current_health}")
+        print(f"I am {self.name}, handling signal{signal}")
 
     def set_x_velocity(self, x):
         # sets the x velocity
@@ -124,6 +132,8 @@ class Entity:
 
     def tick(self):
         # tick this entity, handling actions and continuous functions
+        self.sprite.update_pos(self.x_pos, self.y_pos)
+
         if self.current_action is not None:
             if self.current_action.finished:
                 self.current_action = None
