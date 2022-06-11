@@ -28,7 +28,7 @@ def quit_game():
 def run_game():
     """The main function. Starts the program."""
     graphics.window.init_graphics()
-    player: Player = Player(5, 2, current_action=None)
+    player: Player = Player(5, 2, current_action=None, speed=5)
     npc: NPC = NPC("enn pee cee", 0, 0)
     game.set_player(player)
     game.spawn_entity(player)

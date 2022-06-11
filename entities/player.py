@@ -6,12 +6,12 @@ from graphics import sprite
 from gameplay.actions.innate import punch
 
 class Player(Entity):
-    def __init__ (self, x_pos: int, y_pos: int, current_action = None):
+    def __init__ (self, x_pos: int, y_pos: int, current_action = None, *args, **kwargs):
         self.sprite = sprite.PlayerSprite() # the player's avatar sprite
         self.action_slots = [None, None,
                              lambda: GameAction(GameActionType.ATTACK, 1000, lambda: punch(self)), None]
 
-        super().__init__("Player", x_pos, y_pos, current_action) # create an entity with these attributes
+        super().__init__("Player", x_pos, y_pos, current_action, *args, **kwargs) # create an entity with these attributes
 
     def wasd_input(self, wasd_pressed: set[int]):
         # handles the player's WASD input for moving
@@ -37,5 +37,7 @@ class Player(Entity):
     def tick(self):
         # update sprite position
         self.sprite.update_pos(self.x_pos, self.y_pos)
+        print(f"x velocity: {self.x_velocity}")
+        print(f"y velocity: {self.y_velocity}")
 
         super().tick()
