@@ -3,7 +3,7 @@ import pygame
 from entities.entity import Entity
 from gameplay.action import GameAction, GameActionType
 from gameplay.actions.innate import punch
-from graphics.sprite import SSSSprite
+from graphics.sprite import EntitySprite
 
 
 class Player(Entity):
@@ -12,7 +12,7 @@ class Player(Entity):
                              lambda: GameAction("Punch", GameActionType.ATTACK, 200, lambda: punch(self)), None]
 
         super().__init__(name="Player", x_pos=x_pos, y_pos=y_pos,
-                         sprite=SSSSprite(img_path="captain_alex.png", scale=(40, 80)),
+                         sprite=EntitySprite(img_path="captain_alex.png", scale=(40, 80)),
                          current_action=current_action,
                          *args, **kwargs)
 

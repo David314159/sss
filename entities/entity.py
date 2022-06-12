@@ -1,6 +1,6 @@
 from typing import Callable, Any
 
-from graphics.sprite import SSSSprite
+from graphics.sprite import EntitySprite, ResourceBar
 
 from gameplay.clock import clock
 from gameplay.signal import Signal
@@ -33,9 +33,8 @@ class ContCalledFunc:
         return self.stop_after is not None and (clock.time - self.start_time) > self.stop_after
 
 
-
 class Entity:
-    def __init__(self, name: str, x_pos: int, y_pos: int, sprite: SSSSprite,
+    def __init__(self, name: str, x_pos: int, y_pos: int, sprite: EntitySprite,
                  current_action = None,
                  max_health = 0, max_mana: int = 0, max_energy: int = 0,
                  speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
@@ -44,9 +43,6 @@ class Entity:
 
         # Lasting, constant attributes
         self.name = name
-
-        # Graphics
-        self.sprite = sprite
 
         # Lasting, variable attributes
         self.x_pos = x_pos
@@ -82,6 +78,11 @@ class Entity:
         self.nature_power = nature_power
         self.magic_power  = magic_power
 
+        # Graphics
+        self.sprite = sprite
+        self.sprite.entity = self
+        self.health_bar = ResourceBar(self, "current_health", max_health)
+
         # Enable movement
         self.to_call_continuously.add(ContCalledFunc("movement", self.move, 20))
 
@@ -105,8 +106,6 @@ class Entity:
         # handle a signal from another entity or the game
         if signal.damage > 0:
             self.current_health -= signal.damage
-            print(f"{self.name} health: {self.current_health}")
-        print(f"I am {self.name}, handling signal{signal}")
 
     def set_x_velocity(self, x):
         # sets the x velocity
@@ -132,7 +131,8 @@ class Entity:
 
     def tick(self):
         # tick this entity, handling actions and continuous functions
-        self.sprite.update_pos(self.x_pos, self.y_pos)
+        self.sprite.tick()
+        self.health_bar.tick()
 
         if self.current_action is not None:
             if self.current_action.finished:
