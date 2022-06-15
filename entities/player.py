@@ -1,15 +1,16 @@
 import pygame
 
 from entities.entity import Entity
-from gameplay.action import GameAction, GameActionType
-from gameplay.actions.innate import punch
+from gameplay import ability
+from gameplay.action import GameAction, GameActionType, do_nothing
 from graphics.sprite import EntitySprite
 
 
 class Player(Entity):
-    def __init__ (self, x_pos: int, y_pos: int, current_action = None, *args, **kwargs):
-        self.action_slots = [None, None,
-                             lambda: GameAction("Punch", GameActionType.ATTACK, 200, lambda: punch(self)), None]
+
+    def __init__ (self, x_pos: int, y_pos: int, current_action=do_nothing, *args, **kwargs):
+        self.ability_slots = [ability.empty_slot, ability.empty_slot,
+                              ability.punch, ability.empty_slot]
 
         super().__init__(name="Player", x_pos=x_pos, y_pos=y_pos,
                          sprite=EntitySprite(img_path="captain_alex.png", scale=(40, 80)),
@@ -17,7 +18,7 @@ class Player(Entity):
                          *args, **kwargs)
 
     def set_action(self, action: GameAction):
-        if self.current_action is None or self.current_action.name != action.name:
+        if self.current_action.name != action.name:
             self.current_action = action
 
     def wasd_input(self, wasd_pressed: set[int]):
@@ -35,7 +36,7 @@ class Player(Entity):
             self.x_velocity += self.speed
 
     def qe_input(self, qe_pressed: set[int]):
-        if pygame.K_q in qe_pressed and self.action_slots[2] is not None:
-            self.set_action(self.action_slots[2]())
-        if pygame.K_e in qe_pressed and self.action_slots[3] is not None:
-            self.set_action(self.action_slots[3]())
+        if pygame.K_q in qe_pressed:
+            self.set_action(self.ability_slots[2].as_action(self))
+        if pygame.K_e in qe_pressed:
+            self.set_action(self.ability_slots[3].as_action(self))

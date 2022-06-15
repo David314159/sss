@@ -27,19 +27,24 @@ class EntitySprite(pygame.sprite.Sprite):
 
 
 class ResourceBar:
-    def __init__(self, entity: "Entity", attr_name: str, max_val: int):
+    HEIGHT = 10
+    GAP_SIZE = 5
+
+    def __init__(self, entity: "Entity", attr_name: str, max_val: int, proximity_rank: int, color: tuple[int, int, int]):
         super().__init__()
+        if max_val <= 0:
+            raise Exception("Maximum value of a resource bar must be positive")
         self.entity = entity
         self.attr_name = attr_name
         self.max_val = max_val
-        current_val = getattr(self.entity, self.attr_name)
-        self.rect = pygame.Rect(entity.sprite.rect.left, entity.sprite.rect.top - 15,
-                                self.entity.sprite.rect.width*(current_val/self.max_val),
-                                10)
+        self.proximity_rank = proximity_rank
+        self.color = color
+        self.rect = pygame.Rect(0, 0, 0, 0)
 
     def tick(self):
         current_val = getattr(self.entity, self.attr_name)
         self.rect.width = self.entity.sprite.rect.width*(current_val/self.max_val)
         self.rect.left = self.entity.sprite.rect.left
-        self.rect.bottom = self.entity.sprite.rect.top - 20
-        pygame.draw.rect(screen, (255, 0, 0), self.rect)
+        self.rect.bottom = self.entity.sprite.rect.top - (self.HEIGHT+self.GAP_SIZE)*self.proximity_rank
+        self.rect.height = self.HEIGHT
+        pygame.draw.rect(screen, self.color, self.rect)

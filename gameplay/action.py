@@ -14,23 +14,28 @@ class GameActionType(Enum):
     PASS = auto()
     OTHER = auto()
 
-
 class GameAction:
-    def __init__(self, name: str, action_type: GameActionType, resolve_time: int,
-                 function_to_call: Callable[[], Any]):
+    def __init__(self, name: str, action_type: GameActionType, resolve_time: int, function_to_call_first: Callable[[], Any],
+                 function_to_call_last: Callable[[], Any]):
         self.name = name
-        self.action_type = action_type # type of action
-        self.function_to_call = function_to_call # function to call when action resolves
         self.start_time = clock.time # when the action began
         self.resolve_time = resolve_time # how long the action takes to resolve (milliseconds)
         self.finished = False # if the action is finished
+        self._has_ticked = False
+
+        self.function_to_call_first = function_to_call_first
+        self.function_to_call_last = function_to_call_last
 
     def tick(self):
-        # if enough time has passed, the action resolves
 
+
+        if not self._has_ticked:
+            self.function_to_call_first()
+            self._has_ticked = True
+
+        # if enough time has passed, the action resolves
         if clock.time - self.start_time >= self.resolve_time and not self.finished:
-            self.function_to_call()
+            self.function_to_call_last()
             self.finished = True
 
-
-
+do_nothing = GameAction("do nothing", GameActionType.OTHER, 0, lambda: None, lambda: None)
