@@ -33,7 +33,7 @@ def punch_resolve(puncher: "Entity"):
                      )
 
 
-empty_slot = Ability("empty slot", 0, lambda: None)
+empty_slot = Ability("empty slot", 0, lambda player: None)
 
 punch = Ability("punch", 250, punch_resolve,
                 energy_cost=50, mana_cost=10)
