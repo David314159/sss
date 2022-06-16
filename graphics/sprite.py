@@ -5,6 +5,8 @@ from graphics.window import screen
 
 entity_sprites = pygame.sprite.Group()
 effect_sprites = pygame.sprite.Group()
+resource_bars = set()
+dead_resource_bars = set()
 
 
 # Sprites are for graphics and hitboxes
@@ -64,10 +66,16 @@ class ResourceBar:
         self.color = color
         self.rect = pygame.Rect(0, 0, 0, 0)
 
+        resource_bars.add(self)
+
     def tick(self):
         current_val = getattr(self.entity, self.attr_name)
         self.rect.width = self.entity.sprite.rect.width*(current_val/self.max_val)
         self.rect.left = self.entity.sprite.rect.left
         self.rect.bottom = self.entity.sprite.rect.top - (self.HEIGHT+self.GAP_SIZE)*self.proximity_rank
         self.rect.height = self.HEIGHT
+
+        if not self.entity.alive:
+            dead_resource_bars.add(self)
+
         pygame.draw.rect(screen, self.color, self.rect)

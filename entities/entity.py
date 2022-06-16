@@ -209,9 +209,6 @@ class Entity:
 
     def tick(self):
         # tick this entity, handling actions and continuous functions
-        self.health_bar.tick()
-        self.mana_bar.tick()
-        self.energy_bar.tick()
 
         if self.current_action.finished:
             self.current_action = do_nothing
