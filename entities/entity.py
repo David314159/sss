@@ -1,7 +1,7 @@
 import math
 from typing import Callable, Any
 
-from gameplay.action import do_nothing
+from gameplay.action import do_nothing, GameAction
 from graphics.sprite import EntitySprite, ResourceBar
 
 from gameplay.clock import clock
@@ -173,6 +173,27 @@ class Entity:
             self.current_health = 1
         else:
             self.current_health -= amount
+
+    def my_ability(self, ability: "Ability") -> "Ability":
+        return ability
+
+    def attempt_ability(self, ability: "Ability"):
+        if self.current_energy - ability.energy_cost >= 0 \
+                and self.current_mana - ability.mana_cost >= 0 \
+                and self.current_health - ability.health_cost > 0 \
+                and self.current_action.name != ability.name:
+            self.spend_energy(ability.energy_cost)
+            self.spend_mana(ability.mana_cost)
+            self.spend_health(ability.health_cost)
+            self.current_action = ability.as_action(self)
+        elif self.current_action.name == ability.name:
+            # TODO change from print statements
+            print("dummie you are already doign that")
+        else:
+            print("not enough stuff")
+
+
+
 
     def move(self):
         # move based on own velocity

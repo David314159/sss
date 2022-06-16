@@ -1,21 +1,12 @@
 from enum import Enum, auto
 from typing import Callable, Any
+
 from gameplay.clock import clock
 
 
-class GameActionType(Enum):
-
-    # types of in game actions
-    MOVE = auto()
-    INTERACT = auto()
-    ABILITY = auto()
-    ATTACK = auto()
-    CANCEL = auto()
-    PASS = auto()
-    OTHER = auto()
 
 class GameAction:
-    def __init__(self, name: str, action_type: GameActionType, resolve_time: int, function_to_call_first: Callable[[], Any],
+    def __init__(self, name: str, resolve_time: int, function_to_call_first: Callable[[], Any],
                  function_to_call_last: Callable[[], Any]):
         self.name = name
         self.start_time = clock.time # when the action began
@@ -38,4 +29,4 @@ class GameAction:
             self.function_to_call_last()
             self.finished = True
 
-do_nothing = GameAction("do nothing", GameActionType.OTHER, 0, lambda: None, lambda: None)
+do_nothing = GameAction("do nothing", 0, lambda: None, lambda: None)

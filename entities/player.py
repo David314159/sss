@@ -2,7 +2,7 @@ import pygame
 
 from entities.entity import Entity
 from gameplay import ability
-from gameplay.action import GameAction, GameActionType, do_nothing
+from gameplay.action import GameAction, do_nothing
 from graphics.sprite import EntitySprite
 
 
@@ -16,10 +16,6 @@ class Player(Entity):
                          sprite=EntitySprite(img_path="captain_alex.png", scale=(40, 80)),
                          current_action=current_action,
                          *args, **kwargs)
-
-    def set_action(self, action: GameAction):
-        if self.current_action.name != action.name:
-            self.current_action = action
 
     def wasd_input(self, wasd_pressed: set[int]):
         # handles the player's WASD input for moving
@@ -37,6 +33,6 @@ class Player(Entity):
 
     def qe_input(self, qe_pressed: set[int]):
         if pygame.K_q in qe_pressed:
-            self.set_action(self.ability_slots[2].as_action(self))
+            self.attempt_ability(self.ability_slots[2])
         if pygame.K_e in qe_pressed:
-            self.set_action(self.ability_slots[3].as_action(self))
+            self.attempt_ability(self.ability_slots[3])
