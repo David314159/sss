@@ -23,8 +23,15 @@ class Game:
     def tick(self):
         pygame.event.pump() # allows key input and graphics to change
         input.tick()
+        dead_entities = set()
         for entity in self.entities:
             entity.tick()
+            if not entity.alive:
+                dead_entities.add(entity)
+
+        for entity in dead_entities:
+            self.entities.remove(entity)
+
         clock.tick()
 
         self.player.wasd_input(input.detect_wasd()) # take player WASD input

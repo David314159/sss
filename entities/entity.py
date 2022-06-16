@@ -66,6 +66,7 @@ class Entity:
 
         # Temporary states
         self.current_action = current_action
+        self.alive = True
 
         # Effects over time
         self.to_call_continuously: set[ContCalledFunc] = set()
@@ -188,12 +189,15 @@ class Entity:
             self.current_action = ability.as_action(self)
         elif self.current_action.name == ability.name:
             # TODO change from print statements
-            print("dummie you are already doign that")
+            print("dummie you are already doing that")
         else:
             print("not enough stuff")
 
+    def is_alive(self) -> bool:
+        return self.current_health > 0
 
-
+    def on_death(self):
+        self.sprite.remove_entity_sprite()
 
     def move(self):
         # move based on own velocity
@@ -221,3 +225,7 @@ class Entity:
 
         for func_spec in func_specs_to_remove:
             self.to_call_continuously.remove(func_spec)
+
+        if not self.is_alive():
+            self.alive = False
+            self.on_death()

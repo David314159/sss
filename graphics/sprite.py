@@ -19,6 +19,9 @@ class EntitySprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         entity_sprites.add(self)
 
+    def remove_entity_sprite(self):
+        self.remove(entity_sprites)
+
     def tick(self):
         """Updates the sprite's position on the screen."""
         if self.entity is not None:
