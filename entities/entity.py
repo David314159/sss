@@ -2,7 +2,7 @@ import math
 from typing import Callable, Any
 
 from gameplay.action import do_nothing, GameAction
-from graphics.sprite import EntitySprite, ResourceBar
+from graphics.sprite import EntitySprite, ResourceBar, EffectSprite
 
 from gameplay.clock import clock
 from gameplay.signal import Signal
@@ -198,6 +198,8 @@ class Entity:
 
     def on_death(self):
         self.sprite.remove_entity_sprite()
+        death_effect = EffectSprite("death_effect.png", self.sprite.scale, 1000)
+        death_effect.start_effect(self.x_pos, self.y_pos)
 
     def move(self):
         # move based on own velocity
@@ -207,7 +209,6 @@ class Entity:
 
     def tick(self):
         # tick this entity, handling actions and continuous functions
-        self.sprite.tick()
         self.health_bar.tick()
         self.mana_bar.tick()
         self.energy_bar.tick()

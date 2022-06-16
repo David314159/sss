@@ -1,21 +1,22 @@
-from typing import Callable, Any
-
+from gameplay.clock import clock
 import pygame
 
 from graphics.window import screen
 
 entity_sprites = pygame.sprite.Group()
+effect_sprites = pygame.sprite.Group()
 
 
 # Sprites are for graphics and hitboxes
 
 
 class EntitySprite(pygame.sprite.Sprite):
-    def __init__(self, img_path: str, scale: tuple[int, int]):
+    def __init__(self, img_path: str, scale: list[int, int]):
         super().__init__()
         self.entity = None
+        self.scale = scale
         self.image = pygame.image.load(f"resources/images/sprites/{img_path}").convert()
-        self.image = pygame.transform.scale(self.image, scale)
+        self.image = pygame.transform.scale(self.image, tuple(scale))
         self.rect = self.image.get_rect()
         entity_sprites.add(self)
 
@@ -28,6 +29,25 @@ class EntitySprite(pygame.sprite.Sprite):
             self.rect.x = self.entity.x_pos
             self.rect.y = self.entity.y_pos
 
+class EffectSprite(pygame.sprite.Sprite):
+    def __init__(self, img_path: str, scale: list[int, int], duration: int):
+        super().__init__()
+        self.image = pygame.image.load(f"resources/images/sprites/{img_path}").convert()
+        self.image = pygame.transform.scale(self.image, tuple(scale))
+        self.rect = self.image.get_rect()
+
+        self.duration = duration
+        self.start_time = None
+
+    def start_effect(self, x, y):
+        self.start_time = clock.time
+        effect_sprites.add(self)
+        self.rect.x = x
+        self.rect.y = y
+
+    def tick(self):
+        if clock.time - self.start_time > self.duration:
+            self.remove(effect_sprites)
 
 class ResourceBar:
     HEIGHT = 10
