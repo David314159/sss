@@ -4,9 +4,10 @@ from typing import Callable, Any
 from gameplay.clock import clock
 
 class GameAction:
-    def __init__(self, name: str, resolve_time: int, function_to_call_first: Callable[[], Any],
+    def __init__(self, name: str, resolve_time: int, can_move, function_to_call_first: Callable[[], Any],
                  function_to_call_last: Callable[[], Any]):
         self.name = name
+        self.can_move = can_move
         self.start_time = clock.time # when the action began
         self.resolve_time = resolve_time # how long the action takes to resolve (milliseconds)
         self.finished = False # if the action is finished
@@ -25,4 +26,4 @@ class GameAction:
             self.function_to_call_last()
             self.finished = True
 
-do_nothing = GameAction("do nothing", 0, lambda: None, lambda: None)
+do_nothing = GameAction("do nothing", 0, True, lambda: None, lambda: None)

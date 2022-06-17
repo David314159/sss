@@ -8,7 +8,7 @@ from gameplay.signal import Signal
 
 class Ability:
     def __init__(self, name: str, resolve_time: int,
-                 function_to_call: Callable[["Entity"], Any],
+                 function_to_call: Callable[["Entity"], Any], can_move: bool = False,
                  energy_cost: int = 0, mana_cost: int = 0, health_cost: int = 0
                  ):
         self.name = name
@@ -16,12 +16,13 @@ class Ability:
         self.resolve_time = resolve_time
         self.function_to_call = function_to_call
 
+        self.can_move = can_move
         self.energy_cost = energy_cost
         self.mana_cost = mana_cost
         self.health_cost = health_cost
 
     def as_action(self, player: "Player"):
-        return GameAction(self.name, self.resolve_time, lambda: None, lambda: self.function_to_call(player))
+        return GameAction(self.name, self.resolve_time, self.can_move, lambda: None, lambda: self.function_to_call(player))
 
 
 def punch_resolve(puncher: "Entity"):

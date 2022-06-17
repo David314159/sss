@@ -22,14 +22,15 @@ class Player(Entity):
         self.set_velocity(0, 0) # set the velocity to zero each time
         # if the player is in control of their movement and they do nothing,
         # this will ensure they don't move
-        if pygame.K_w in wasd_pressed:
-            self.y_velocity -= self.speed
-        if pygame.K_a in wasd_pressed:
-            self.x_velocity -= self.speed
-        if pygame.K_s in wasd_pressed:
-            self.y_velocity += self.speed
-        if pygame.K_d in wasd_pressed:
-            self.x_velocity += self.speed
+        if self.current_action.can_move:
+            if pygame.K_w in wasd_pressed:
+                self.y_velocity -= self.speed
+            if pygame.K_a in wasd_pressed:
+                self.x_velocity -= self.speed
+            if pygame.K_s in wasd_pressed:
+                self.y_velocity += self.speed
+            if pygame.K_d in wasd_pressed:
+                self.x_velocity += self.speed
 
     def qe_input(self, qe_pressed: set[int]):
         if pygame.K_q in qe_pressed:
