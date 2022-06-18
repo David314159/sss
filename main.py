@@ -14,6 +14,7 @@ import time
 from graphics.sprite import EntitySprite
 from graphics.init import init_graphics
 from graphics.tick import tick_graphics
+from physics.vector2d import Vector2D
 
 TPS = 20
 """Ticks per second. All tick() methods should be called at this rate."""
@@ -34,13 +35,13 @@ def quit_game():
 def run_game():
     """The main function. Starts the program."""
     init_graphics()
-    player: Player = Player(x_pos=5, y_pos=2,
+    player: Player = Player(position=Vector2D(50, 100),
                             current_action=nothing_action,
                             max_health=500, max_mana=500, max_energy=500,
                             speed=5, strength=50,
                             base_energy_regen=100, base_mana_regen=10, base_health_regen=5,
                             )
-    npc: NPC = NPC("enn pee cee", x_pos=250, y_pos=250,
+    npc: NPC = NPC("enn pee cee", position=Vector2D(250, 250),
                    max_health=1000, max_mana=200, max_energy=500,
                    sprite=EntitySprite(img_path="goblin.jpeg", scale=(50, 50)))
     game.set_player(player)

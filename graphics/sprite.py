@@ -28,8 +28,8 @@ class EntitySprite(pygame.sprite.Sprite):
     def tick(self):
         """Updates the sprite's position on the screen."""
         if self.entity is not None:
-            self.rect.x = self.entity.x_pos
-            self.rect.y = self.entity.y_pos
+            self.rect.x = self.entity.position.x
+            self.rect.y = self.entity.position.y
 
 class EffectSprite(pygame.sprite.Sprite):
     def __init__(self, img_path: str, scale: list[int, int], duration: int):

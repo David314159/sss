@@ -7,6 +7,8 @@ from graphics.sprite import EntitySprite, ResourceBar, EffectSprite
 from gameplay.clock import clock
 from gameplay.signal import Signal
 
+from physics.vector2d import Vector2D
+
 class ContCalledFunc:
     """Object for calling functions continuously"""
 
@@ -35,7 +37,7 @@ class ContCalledFunc:
 
 class Entity:
     """Represents everything in the game that has a location and can be targeted."""
-    def __init__(self, name: str, x_pos: int, y_pos: int, sprite: EntitySprite,
+    def __init__(self, name: str, position: Vector2D, sprite: EntitySprite,
                  current_action=nothing_action,
                  max_health: int = 0, max_mana: int = 0, max_energy: int = 0,
                  speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
@@ -50,10 +52,8 @@ class Entity:
         self.base_health_regen = base_health_regen
 
         # Lasting, variable attributes
-        self.x_pos = x_pos
-        self.y_pos = y_pos
-        self.x_velocity = 0
-        self.y_velocity = 0
+        self.position = position
+        self.velocity = Vector2D(0, 0)
 
         # Resources
         self.max_health = max_health
@@ -125,8 +125,8 @@ class Entity:
     def set_velocity(self, x, y):
         # sets overall velocity
 
-        self.x_velocity = x
-        self.y_velocity = y
+        self.velocity.x = x
+        self.velocity.y = y
 
     def regen_energy(self, amount: int):
         if self.current_energy + amount > self.max_energy:
@@ -189,13 +189,13 @@ class Entity:
         """Should be called when this entity dies."""
         self.sprite.remove_entity_sprite()
         death_effect = EffectSprite("death_effect.png", self.sprite.scale, 1000)
-        death_effect.start_effect(self.x_pos, self.y_pos)
+        death_effect.start_effect(self.position.x, self.position.y)
 
     def move(self):
         """Move based on own velocity.
         This should almost always be running as a continuous function."""
-        self.x_pos += self.x_velocity
-        self.y_pos += self.y_velocity
+        self.position.x += self.velocity.x
+        self.position.y += self.velocity.y
 
     def tick(self):
         """Tick this entity, handling its actions and continuously called functions.
