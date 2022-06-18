@@ -2,7 +2,7 @@ import sys
 from enum import Enum, auto
 
 import graphics.window
-from gameplay.action import do_nothing
+from gameplay.action import nothing_action
 from gameplay.game import *
 from entities.npc import NPC
 from entities.player import Player
@@ -35,7 +35,7 @@ def run_game():
     """The main function. Starts the program."""
     init_graphics()
     player: Player = Player(x_pos=5, y_pos=2,
-                            current_action=do_nothing,
+                            current_action=nothing_action,
                             max_health=500, max_mana=500, max_energy=500,
                             speed=5, strength=50,
                             base_energy_regen=100, base_mana_regen=10, base_health_regen=5,

@@ -41,22 +41,20 @@ class Game:
         self.tick_num += 1
 
     def send_signal(self, signal: Signal, should_send_to: Callable[[Entity], bool]):
-        # our game's event system. This allows any object to send a custom object that is received and
-        # interpreted by any number of entities that satisfy a condition
+        """Our game's event system. This allows any object to send a custom object that is received and
+        interpreted by any number of entities that satisfy a condition"""
         for entity in self.entities:
             if should_send_to(entity):
                 entity.handle_signal(signal)
 
     def ping_everything(self):
-        # sends an empty singal to everything
+        """Sends an empty signal to every entity in the game. Used for testing."""
         self.send_signal(Signal(), lambda entity: True)
 
     def spawn_entity(self, entity: Entity):
-        # load an entity
         self.entities.add(entity)
 
     def despawn_entity(self, entity: Entity):
-        # unload an entity
         self.entities.remove(entity)
 
 

@@ -2,8 +2,7 @@ from entities.entity import Entity
 
 
 class NPC(Entity):
-    # class for NPCs
-    # will add more to this later
+    """Will add more to this later"""
 
     def tick(self):
         super().tick()

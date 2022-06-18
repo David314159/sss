@@ -4,6 +4,7 @@ from typing import Callable, Any
 from gameplay.clock import clock
 
 class GameAction:
+    """Used to represent an action that an entity takes. Handles the actual execution of the action."""
     def __init__(self, name: str, resolve_time: int, can_move, function_to_call_first: Callable[[], Any],
                  function_to_call_last: Callable[[], Any]):
         self.name = name
@@ -26,4 +27,4 @@ class GameAction:
             self.function_to_call_last()
             self.finished = True
 
-do_nothing = GameAction("do nothing", 0, True, lambda: None, lambda: None)
+nothing_action = GameAction("do nothing", 0, True, lambda: None, lambda: None)

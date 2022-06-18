@@ -1,7 +1,7 @@
 import math
 from typing import Callable, Any
 
-from gameplay.action import do_nothing, GameAction
+from gameplay.action import nothing_action
 from graphics.sprite import EntitySprite, ResourceBar, EffectSprite
 
 from gameplay.clock import clock
@@ -19,26 +19,25 @@ class ContCalledFunc:
         self.effect_timer = 0 # temporary for keeping track of calls, updates each tick
 
     def tick(self):
-        # ticks the continuously called function
+        """If enough time has passed, calls the underlying function and lowers the timer.
+        Repeats until no time remains."""
 
         self.effect_timer += clock.time_since_last_tick
         while self.effect_timer > 0:
             self.func()
             self.effect_timer -= self.call_every
 
-        # if enough time has passed, call the function and lower the timer
-        # continue until no time remains
-
     def is_finished(self):
-        # returns true if the function has been called for the desired amount of time
+        """Returns true if the function has been called for the desired amount of time"""
 
         return self.stop_after is not None and (clock.time - self.start_time) > self.stop_after
 
 
 class Entity:
+    """Represents everything in the game that has a location and can be targeted."""
     def __init__(self, name: str, x_pos: int, y_pos: int, sprite: EntitySprite,
-                 current_action = do_nothing,
-                 max_health = 0, max_mana: int = 0, max_energy: int = 0,
+                 current_action=nothing_action,
+                 max_health: int = 0, max_mana: int = 0, max_energy: int = 0,
                  speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
                  base_energy_regen: int = 0, base_mana_regen: int = 0, base_health_regen: int = 0,
                  life_power: int = 0, storm_power: int = 0, death_power: int = 0, fire_power: int = 0, nature_power: int = 0,
@@ -58,7 +57,7 @@ class Entity:
 
         # Resources
         self.max_health = max_health
-        self.current_health =  max_health
+        self.current_health = max_health
         self.max_mana = max_mana
         self.current_mana = max_mana
         self.max_energy = max_energy
@@ -83,7 +82,7 @@ class Entity:
         self.death_power = death_power
         self.fire_power = fire_power
         self.nature_power = nature_power
-        self.magic_power  = magic_power
+        self.magic_power = magic_power
 
         # Graphics
         self.sprite = sprite
@@ -103,13 +102,13 @@ class Entity:
                                lambda: self.regen_health(math.ceil(base_health_regen/10)), 100)
 
     def call_continuously(self, func_name: str, func: Callable[[], Any], call_every: int, stop_after: int = None):
-        # Adds a new continously called function to this entity
-        # can be used for over-time effects, movement, or anything else that repeats on a timer
+        """Adds a new continously called function to this entity.
+        Can be used for over-time effects, movement, or anything else that repeats on a timer"""
 
         self.to_call_continuously.add(ContCalledFunc(func_name, func, call_every, stop_after))
 
     def stop_calling(self, name: str):
-        # given the name, stop calling the function early
+        """given the name, stop calling that function early"""
 
         func_specs_to_remove = set()
         for func_spec in self.to_call_continuously:
@@ -119,19 +118,9 @@ class Entity:
             self.to_call_continuously.remove(func_spec)
 
     def handle_signal(self, signal: Signal):
-        # handle a signal from another entity or the game
+        """handle a signal from another entity or the game"""
         if signal.damage > 0:
             self.current_health -= signal.damage
-
-    def set_x_velocity(self, x):
-        # sets the x velocity
-
-        self.x_velocity = x
-
-    def set_y_velocity(self, x):
-        # sets the y velocity
-
-        self.x_velocity = x
 
     def set_velocity(self, x, y):
         # sets overall velocity
@@ -197,21 +186,24 @@ class Entity:
         return self.current_health > 0
 
     def on_death(self):
+        """Should be called when this entity dies."""
         self.sprite.remove_entity_sprite()
         death_effect = EffectSprite("death_effect.png", self.sprite.scale, 1000)
         death_effect.start_effect(self.x_pos, self.y_pos)
 
     def move(self):
-        # move based on own velocity
-        # this should almost always be running as a continuous function
+        """Move based on own velocity.
+        This should almost always be running as a continuous function."""
         self.x_pos += self.x_velocity
         self.y_pos += self.y_velocity
 
     def tick(self):
-        # tick this entity, handling actions and continuous functions
+        """Tick this entity, handling its actions and continuously called functions.
+        Check for death, and call self.on_death() if dead.
+        """
 
         if self.current_action.finished:
-            self.current_action = do_nothing
+            self.current_action = nothing_action
         else:
             self.current_action.tick()
 

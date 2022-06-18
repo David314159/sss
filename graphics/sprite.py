@@ -8,18 +8,18 @@ effect_sprites = pygame.sprite.Group()
 resource_bars = set()
 dead_resource_bars = set()
 
-
 # Sprites are for graphics and hitboxes
-
 
 class EntitySprite(pygame.sprite.Sprite):
     def __init__(self, img_path: str, scale: list[int, int]):
+        """A sprite that represents an entity in our game"""
         super().__init__()
         self.entity = None
         self.scale = scale
         self.image = pygame.image.load(f"resources/images/sprites/{img_path}").convert()
         self.image = pygame.transform.scale(self.image, tuple(scale))
         self.rect = self.image.get_rect()
+
         entity_sprites.add(self)
 
     def remove_entity_sprite(self):
@@ -33,6 +33,7 @@ class EntitySprite(pygame.sprite.Sprite):
 
 class EffectSprite(pygame.sprite.Sprite):
     def __init__(self, img_path: str, scale: list[int, int], duration: int):
+        """A sprite that represents a temporary graphical effect, such as an explosion"""
         super().__init__()
         self.image = pygame.image.load(f"resources/images/sprites/{img_path}").convert()
         self.image = pygame.transform.scale(self.image, tuple(scale))
@@ -44,10 +45,12 @@ class EffectSprite(pygame.sprite.Sprite):
     def start_effect(self, x, y):
         self.start_time = clock.time
         effect_sprites.add(self)
+
         self.rect.x = x
         self.rect.y = y
 
     def tick(self):
+
         if clock.time - self.start_time > self.duration:
             self.remove(effect_sprites)
 
