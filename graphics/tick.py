@@ -1,6 +1,6 @@
 import pygame
 
-from graphics.sprite import entity_sprites, effect_sprites, resource_bars, dead_resource_bars
+from graphics.sprite import entity_sprites, effect_sprites, resource_bars, dead_resource_bars, visible_entity_sprites
 from graphics.window import screen, background_color
 
 def tick_group(group: pygame.sprite.Group):
@@ -21,7 +21,8 @@ def tick_graphics():
     effect_sprites.update()
     tick_group(effect_sprites)
 
-    entity_sprites.draw(screen)
+
+    visible_entity_sprites.draw(screen)
     effect_sprites.draw(screen)
 
 

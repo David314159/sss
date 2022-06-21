@@ -1,19 +1,26 @@
+from typing import Any
+
 from gameplay.clock import clock
 import pygame
 
 from graphics.window import screen
 
 entity_sprites = pygame.sprite.Group()
+visible_entity_sprites = pygame.sprite.Group()
 effect_sprites = pygame.sprite.Group()
+
 resource_bars = set()
 dead_resource_bars = set()
 
 # Sprites are for graphics and hitboxes
 
 class EntitySprite(pygame.sprite.Sprite):
-    def __init__(self, img_path: str, scale: list[int, int]):
+    def __init__(self, img_path: str, scale: list[int, int], visible: bool = True):
         """A sprite that represents an entity in our game"""
         super().__init__()
+        self.visible = visible
+        if self.visible:
+            visible_entity_sprites.add(self)
         self.entity = None
         self.scale = scale
         self.image = pygame.image.load(f"resources/images/sprites/{img_path}").convert()
@@ -23,6 +30,7 @@ class EntitySprite(pygame.sprite.Sprite):
         entity_sprites.add(self)
 
     def remove_entity_sprite(self):
+        self.remove(visible_entity_sprites)
         self.remove(entity_sprites)
 
     def tick(self):
@@ -84,4 +92,5 @@ class ResourceBar:
         if not self.entity.alive:
             dead_resource_bars.add(self)
 
-        pygame.draw.rect(screen, self.color, self.rect)
+        if self.entity.sprite.visible:
+            pygame.draw.rect(screen, self.color, self.rect)
