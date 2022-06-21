@@ -1,12 +1,10 @@
 import sys
 from enum import Enum, auto
 
-import graphics.window
 from gameplay.action import nothing_action
 from gameplay.game import *
 from entities.npc import NPC
 from entities.player import Player
-from graphics.window import screen
 
 import pygame
 import time
@@ -43,7 +41,7 @@ def run_game():
                             )
     npc: NPC = NPC("enn pee cee", position=Vector2D(250, 250),
                    max_health=1000, max_mana=200, max_energy=500,
-                   sprite=EntitySprite(img_path="goblin.jpeg", scale=(50, 50)))
+                   sprite=EntitySprite(img_path="goblin.jpeg", scale=[50, 50]))
     game.set_player(player)
     game.spawn_entity(player)
     game.spawn_entity(npc)

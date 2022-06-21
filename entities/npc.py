@@ -1,7 +1,7 @@
-from entities.entity import Entity
+from entities.being import Being
 
 
-class NPC(Entity):
+class NPC(Being):
     """Will add more to this later"""
 
     def tick(self):

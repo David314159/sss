@@ -31,6 +31,9 @@ class EntitySprite(pygame.sprite.Sprite):
             self.rect.x = self.entity.position.x
             self.rect.y = self.entity.position.y
 
+class ProjectileSprite(EntitySprite):
+    pass
+
 class EffectSprite(pygame.sprite.Sprite):
     def __init__(self, img_path: str, scale: list[int, int], duration: int):
         """A sprite that represents a temporary graphical effect, such as an explosion"""

@@ -1,13 +1,13 @@
 import pygame
 
-from entities.entity import Entity
+from entities.being import Being
 from gameplay import ability
 from gameplay.action import nothing_action
 from graphics.sprite import EntitySprite
 from physics.vector2d import Vector2D
 
 
-class Player(Entity):
+class Player(Being):
     """The player of the game. There should only be one of these (for now)."""
     def __init__ (self, position: Vector2D, current_action=nothing_action, *args, **kwargs):
         self.ability_slots = [ability.empty_slot, ability.empty_slot,

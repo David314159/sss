@@ -2,14 +2,14 @@ from typing import Callable
 
 import pygame
 
-from entities.entity import Entity
+from entities.being import Being
 from gameplay.signal import Signal
 from input import input
 from gameplay.clock import clock
 
 
 class Game:
-    def __init__(self, entities: set[Entity]):
+    def __init__(self, entities: set[Being]):
         # main game class
         # keeps track of entities loaded, signals, and the current gamestate
         self.tick_num: int = 0 # number of game ticks since the game was launched
@@ -40,7 +40,7 @@ class Game:
 
         self.tick_num += 1
 
-    def send_signal(self, signal: Signal, should_send_to: Callable[[Entity], bool]):
+    def send_signal(self, signal: Signal, should_send_to: Callable[[Being], bool]):
         """Our game's event system. This allows any object to send a custom object that is received and
         interpreted by any number of entities that satisfy a condition"""
         for entity in self.entities:
@@ -51,10 +51,10 @@ class Game:
         """Sends an empty signal to every entity in the game. Used for testing."""
         self.send_signal(Signal(), lambda entity: True)
 
-    def spawn_entity(self, entity: Entity):
+    def spawn_entity(self, entity: Being):
         self.entities.add(entity)
 
-    def despawn_entity(self, entity: Entity):
+    def despawn_entity(self, entity: Being):
         self.entities.remove(entity)
 
 
