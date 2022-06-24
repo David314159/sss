@@ -1,11 +1,14 @@
 import pygame
 
+from physics.vector2d import Vector2D
+
 
 class Input:
     """Helper functions for detecting keyboard and mouse input."""
     def __init__(self):
         self.keys_pressed = pygame.key.get_pressed()
         self.mouse_buttons_pressed = pygame.mouse.get_pressed()
+        self.mouse_pos = Vector2D(*pygame.mouse.get_pos())
 
     def detect_keys(self, *keys):
         """
@@ -32,5 +35,7 @@ class Input:
     def tick(self):
         self.keys_pressed = pygame.key.get_pressed()
         self.mouse_buttons_pressed = pygame.mouse.get_pressed()
+        self.mouse_pos.update(*pygame.mouse.get_pos())
+
 
 input = Input()
