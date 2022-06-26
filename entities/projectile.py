@@ -10,7 +10,7 @@ class Projectile(Entity):
         super().__init__(position=position, sprite=sprite, initial_velocity=initial_velocity, *args, **kwargs)
 
     def on_collide(self, target: Entity):
-        print(f"I, {self.name} am collidedededed with {target.name}")
+        print(f"I, {self.name} collided with {target.name}")
 
     def tick(self):
         colliding_entities = get_collisions(self)
