@@ -35,15 +35,10 @@ class Ability:
 
 def punch_resolve(puncher: "Entity"):
     """The function to be called when a punch action resolves."""
-    hand_projectile = Punch(source=puncher, position=Vector2D(*puncher.position),
+    hand_projectile = Punch(name="punch (rename this)", source=puncher, position=Vector2D(puncher.position.x, puncher.position.y),
                             sprite=ProjectileSprite("captain_alex.png", scale=[20, 20]),
-                            initial_velocity=input.mouse_pos - puncher.position)
-    game.send_signal(Signal(sender=puncher, damage=puncher.strength, damage_type="normal"),
-                     should_send_to=lambda entity:
-                     entity is not puncher
-                     and abs(puncher.position.x - entity.position.x) < 100
-                     and abs(puncher.position.y - entity.position.y) < 100
-                     )
+                            initial_velocity=Vector2D(5, 10))
+    game.spawn_entity(hand_projectile)
 
 
 empty_slot = Ability("empty slot", 0, lambda player: None)

@@ -14,8 +14,9 @@ class Game:
         # keeps track of entities loaded, signals, and the current gamestate
         self.tick_num: int = 0 # number of game ticks since the game was launched
         self.entities = entities # the set of entities in the game
+        self.entities_to_add: set[Being] = set()
         self.player = None
-        self.keys_pressed: set = set() # keys pressed right now
+        self.keys_pressed: set[int] = set() # keys pressed right now
 
     def set_player(self, player):
         self.player = player
@@ -24,6 +25,10 @@ class Game:
         pygame.event.pump() # allows key input and graphics to change
         input.tick()
         dead_entities = set()
+        for entity in self.entities_to_add:
+            self.entities.add(entity)
+        self.entities_to_add.clear()
+
         for entity in self.entities:
             entity.tick()
             if not entity.alive:
@@ -52,7 +57,7 @@ class Game:
         self.send_signal(Signal(), lambda entity: True)
 
     def spawn_entity(self, entity: Being):
-        self.entities.add(entity)
+        self.entities_to_add.add(entity)
 
     def despawn_entity(self, entity: Being):
         self.entities.remove(entity)
