@@ -35,7 +35,7 @@ class Ability:
 
 def punch_resolve(puncher: "Entity"):
     """The function to be called when a punch action resolves."""
-    hand_projectile = Punch(name="punch (rename this)", source=puncher, position=Vector2D(puncher.position.x, puncher.position.y),
+    hand_projectile = Punch(name="punch (rename this)", duration=300, source=puncher, position=Vector2D(puncher.position.x, puncher.position.y),
                             sprite=ProjectileSprite("captain_alex.png", scale=[20, 20]),
                             initial_velocity=Vector2D(5, 10))
     game.spawn_entity(hand_projectile)
