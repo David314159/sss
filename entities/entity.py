@@ -40,6 +40,7 @@ class Entity:
         self.position = position
         self.sprite = sprite
         self.sprite.entity = self
+        self.has_ticked = False
         self.to_call_continuously = set()
 
         if initial_velocity is None:
@@ -93,10 +94,17 @@ class Entity:
         self.position.x += self.velocity.x
         self.position.y += self.velocity.y
 
+    def first_tick(self):
+        pass
+
     def tick(self):
         """Tick this entity, handling its continuously called functions.
         Check for death, and call self.on_death() if dead.
         """
+
+        if not self.has_ticked:
+            self.first_tick()
+            self.has_ticked = True
 
         func_specs_to_remove = set()
         for func_spec in self.to_call_continuously:
