@@ -89,7 +89,7 @@ class ResourceBar:
         self.rect.bottom = self.entity.sprite.rect.top - (self.HEIGHT+self.GAP_SIZE)*self.proximity_rank
         self.rect.height = self.HEIGHT
 
-        if not self.entity.alive:
+        if self.entity.should_die():
             dead_resource_bars.add(self)
 
         if self.entity.sprite.visible:

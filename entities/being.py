@@ -124,8 +124,8 @@ class Being(Entity):
         else:
             print("not enough stuff")
 
-    def is_alive(self) -> bool:
-        return self.current_health > 0
+    def should_die(self) -> bool:
+        return self.current_health <= 0
 
     def on_death(self):
         """Should be called when this entity dies."""

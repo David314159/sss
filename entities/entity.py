@@ -40,7 +40,6 @@ class Entity:
         self.position = position
         self.sprite = sprite
         self.sprite.entity = self
-        self.alive = True
         self.to_call_continuously = set()
 
         if initial_velocity is None:
@@ -77,11 +76,15 @@ class Entity:
         self.velocity.x = x
         self.velocity.y = y
 
-    def is_alive(self) -> bool:
-        return True
+    def should_die(self) -> bool:
+        return False
 
     def on_death(self):
         """Should be called when this entity dies."""
+        pass
+
+    def die(self):
+        self.on_death()
         self.sprite.remove_entity_sprite()
 
     def move(self):
@@ -104,6 +107,5 @@ class Entity:
         for func_spec in func_specs_to_remove:
             self.to_call_continuously.remove(func_spec)
 
-        if not self.is_alive():
-            self.alive = False
-            self.on_death()
+        if self.should_die():
+            self.die()

@@ -31,7 +31,7 @@ class Game:
 
         for entity in self.entities:
             entity.tick()
-            if not entity.alive:
+            if entity.should_die():
                 dead_entities.add(entity)
 
         for entity in dead_entities:
