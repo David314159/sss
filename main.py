@@ -14,7 +14,7 @@ from graphics.init import init_graphics
 from graphics.tick import tick_graphics
 from physics.vector2d import Vector2D
 
-TPS = 20
+TPS = 60
 """Ticks per second. All tick() methods should be called at this rate."""
 
 

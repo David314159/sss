@@ -8,6 +8,8 @@ from gameplay.signal import Signal
 from graphics.sprite import ProjectileSprite
 from physics.vector2d import Vector2D
 from input import input
+from pygame import MOUSEBUTTONUP
+from pygame import mouse
 
 
 class Ability:
@@ -35,9 +37,11 @@ class Ability:
 
 def punch_resolve(puncher: "Entity"):
     """The function to be called when a punch action resolves."""
-    hand_projectile = Punch(name="punch (rename this)", duration=300, source=puncher, position=Vector2D(puncher.position.x, puncher.position.y),
+    mouse_pos = mouse.get_pos()
+    hand_projectile = Punch(name="punch (rename this)", duration=1000, source=puncher,
+                            position=Vector2D(puncher.position.x+puncher.sprite.scale[0]/2, puncher.position.y+puncher.sprite.scale[1]/2),
                             sprite=ProjectileSprite("captain_alex.png", scale=[20, 20]),
-                            initial_velocity=Vector2D(5, 10))
+                            initial_velocity=Vector2D((mouse_pos[0]-puncher.position.x)/100, (mouse_pos[1]-puncher.position.y)/100))
     game.spawn_entity(hand_projectile)
 
 
