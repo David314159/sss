@@ -16,10 +16,8 @@ class Being(Entity):
                  current_action=nothing_action,
                  initial_velocity: Vector2D = None,
                  max_health: int = 0, max_mana: int = 0, max_energy: int = 0,
-                 speed: int = 0, toughness: int = 0, dexterity: int = 0, strength: int = 0,
-                 base_energy_regen: int = 0, base_mana_regen: int = 0, base_health_regen: int = 0,
-                 life_power: int = 0, storm_power: int = 0, death_power: int = 0, fire_power: int = 0, nature_power: int = 0,
-                 magic_power: int = 0):
+                 speed: int = 0, base_energy_regen: int = 0, base_mana_regen: int = 0, base_health_regen: int = 0,
+                 life_power: int = 0, storm_power: int = 0, death_power: int = 0, fire_power: int = 0, nature_power: int = 0):
         super().__init__(name, position, sprite, initial_velocity)
 
         # Lasting, constant attributes
@@ -40,9 +38,6 @@ class Being(Entity):
 
         # Physical stats
         self.speed = speed
-        self.toughness = toughness
-        self.dexterity = dexterity
-        self.strength = strength
 
         # Mage stats
         self.life_power = life_power
@@ -50,7 +45,6 @@ class Being(Entity):
         self.death_power = death_power
         self.fire_power = fire_power
         self.nature_power = nature_power
-        self.magic_power = magic_power
 
         # Graphics
         self.health_bar = ResourceBar(self, "current_health", max_health, proximity_rank=3, color=(255, 0, 0))

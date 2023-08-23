@@ -38,14 +38,14 @@ class Ability:
 
 def punch_resolve(puncher: "Entity"):
     """The function to be called when a punch action resolves."""
-    mouse_pos = Vector2D.from_tuple(mouse.get_pos())
+    mouse_pos = Vector2D(*mouse.get_pos())
     initial_pos = Vector2D(puncher.position.x+puncher.sprite.scale[0]/2, puncher.position.y+puncher.sprite.scale[1]/2)
     projectile_to_mouse = Vector2D(mouse_pos.x-initial_pos.x, mouse_pos.y-initial_pos.y)
     angle = atan2(projectile_to_mouse.y, projectile_to_mouse.x)
     hand_projectile = Punch(name="punch (rename this)", duration=150, source=puncher,
                             position=initial_pos,
                             sprite=ProjectileSprite("captain_alex.png", scale=[20, 20]),
-                            initial_velocity=Vector2D.from_polar(10, angle))
+                            initial_velocity=Vector2D.from_polar(10.0, angle))
     game.spawn_entity(hand_projectile)
 
 

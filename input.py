@@ -35,7 +35,7 @@ class Input:
     def tick(self):
         self.keys_pressed = pygame.key.get_pressed()
         self.mouse_buttons_pressed = pygame.mouse.get_pressed()
-        self.mouse_pos.update(*pygame.mouse.get_pos())
+        self.mouse_pos.x, self.mouse_pos.y = pygame.mouse.get_pos()
 
 
 input = Input()

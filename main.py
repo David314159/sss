@@ -36,10 +36,10 @@ def run_game():
     player: Player = Player(position=Vector2D(50, 100),
                             current_action=nothing_action,
                             max_health=500, max_mana=500, max_energy=500,
-                            speed=5, strength=50,
+                            speed=5,
                             base_energy_regen=100, base_mana_regen=10, base_health_regen=5,
                             )
-    npc: NPC = NPC("enn pee cee", position=Vector2D(250, 250),
+    npc: NPC = NPC("enn pee cee", position=Vector2D(250, 250), speed=5,
                    max_health=1000, max_mana=200, max_energy=500,
                    sprite=EntitySprite(img_path="goblin.jpeg", scale=[50, 50]))
     game.set_player(player)

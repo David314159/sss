@@ -44,7 +44,7 @@ class Entity:
         self.to_call_continuously = set()
 
         if initial_velocity is None:
-            self.velocity = Vector2D(0, 0)
+            self.velocity = Vector2D(0.0, 0.0)
         else:
             self.velocity = initial_velocity
 
